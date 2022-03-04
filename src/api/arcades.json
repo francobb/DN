@@ -1,0 +1,647 @@
+{
+  "businesses": [
+    {
+      "id": "hJW95_ykzBW1mPTZ0j-URA",
+      "alias": "free-play-bar-arcade-providence",
+      "name": "Free Play Bar Arcade",
+      "image_url": "https://s3-media4.fl.yelpcdn.com/bphoto/5FmXEwI9lQ6ZUscR1eGWCw/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/free-play-bar-arcade-providence?adjust_creative=K_whzZty-KJG1VSC1-k6YQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=K_whzZty-KJG1VSC1-k6YQ",
+      "review_count": 109,
+      "categories": [
+        {
+          "alias": "bars",
+          "title": "Bars"
+        },
+        {
+          "alias": "arcades",
+          "title": "Arcades"
+        }
+      ],
+      "rating": 4.5,
+      "coordinates": {
+        "latitude": 41.820171,
+        "longitude": -71.412171
+      },
+      "transactions": [],
+      "price": "$",
+      "location": {
+        "address1": "182 Pine St",
+        "address2": "",
+        "address3": null,
+        "city": "Providence",
+        "zip_code": "02903",
+        "country": "US",
+        "state": "RI",
+        "display_address": [
+          "182 Pine St",
+          "Providence, RI 02903"
+        ]
+      },
+      "phone": "+14013164299",
+      "display_phone": "(401) 316-4299",
+      "distance": 790.8061964937147
+    },
+    {
+      "id": "dyStyeHKIH0lRZ7K4ne5EQ",
+      "alias": "the-arcade-providence-providence",
+      "name": "The Arcade Providence",
+      "image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/Cu0_v8USzvfmdFfIwhJ2aA/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/the-arcade-providence-providence?adjust_creative=K_whzZty-KJG1VSC1-k6YQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=K_whzZty-KJG1VSC1-k6YQ",
+      "review_count": 27,
+      "categories": [
+        {
+          "alias": "shoppingcenters",
+          "title": "Shopping Centers"
+        }
+      ],
+      "rating": 3.5,
+      "coordinates": {
+        "latitude": 41.8236679902722,
+        "longitude": -71.4101000981476
+      },
+      "transactions": [],
+      "price": "$$",
+      "location": {
+        "address1": "65 Weybosset St",
+        "address2": "",
+        "address3": "",
+        "city": "Providence",
+        "zip_code": "02903",
+        "country": "US",
+        "state": "RI",
+        "display_address": [
+          "65 Weybosset St",
+          "Providence, RI 02903"
+        ]
+      },
+      "phone": "+14014544568",
+      "display_phone": "(401) 454-4568",
+      "distance": 748.1802704788079
+    },
+    {
+      "id": "rfUFqPC6L4kAwbXvyyRPjg",
+      "alias": "dave-and-busters-providence-2",
+      "name": "Dave & Buster's",
+      "image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/lfEF1p5ahBBnrO70eegXWw/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/dave-and-busters-providence-2?adjust_creative=K_whzZty-KJG1VSC1-k6YQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=K_whzZty-KJG1VSC1-k6YQ",
+      "review_count": 288,
+      "categories": [
+        {
+          "alias": "bars",
+          "title": "Bars"
+        },
+        {
+          "alias": "tradamerican",
+          "title": "American (Traditional)"
+        },
+        {
+          "alias": "arcades",
+          "title": "Arcades"
+        }
+      ],
+      "rating": 3.0,
+      "coordinates": {
+        "latitude": 41.828053,
+        "longitude": -71.417248
+      },
+      "transactions": [
+        "delivery",
+        "pickup"
+      ],
+      "price": "$$",
+      "location": {
+        "address1": "40 Providence Pl",
+        "address2": "",
+        "address3": null,
+        "city": "Providence",
+        "zip_code": "02903",
+        "country": "US",
+        "state": "RI",
+        "display_address": [
+          "40 Providence Pl",
+          "Providence, RI 02903"
+        ]
+      },
+      "phone": "+14012704555",
+      "display_phone": "(401) 270-4555",
+      "distance": 342.33037811600116
+    },
+    {
+      "id": "9nf8smXcnvuIJrfB70LLrw",
+      "alias": "pizza-j-providence",
+      "name": "Pizza J",
+      "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/J7LysyTWlp02c5ad_ONS1Q/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/pizza-j-providence?adjust_creative=K_whzZty-KJG1VSC1-k6YQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=K_whzZty-KJG1VSC1-k6YQ",
+      "review_count": 268,
+      "categories": [
+        {
+          "alias": "pizza",
+          "title": "Pizza"
+        },
+        {
+          "alias": "bars",
+          "title": "Bars"
+        },
+        {
+          "alias": "arcades",
+          "title": "Arcades"
+        }
+      ],
+      "rating": 3.5,
+      "coordinates": {
+        "latitude": 41.8174071,
+        "longitude": -71.4244048
+      },
+      "transactions": [
+        "delivery",
+        "pickup"
+      ],
+      "price": "$$",
+      "location": {
+        "address1": "967 Westminster St",
+        "address2": "",
+        "address3": "",
+        "city": "Providence",
+        "zip_code": "02903",
+        "country": "US",
+        "state": "RI",
+        "display_address": [
+          "967 Westminster St",
+          "Providence, RI 02903"
+        ]
+      },
+      "phone": "+14016320555",
+      "display_phone": "(401) 632-0555",
+      "distance": 964.3516604806961
+    },
+    {
+      "id": "ki8VTR1Oee49jPSsqQow6g",
+      "alias": "the-parlour-providence-2",
+      "name": "The Parlour",
+      "image_url": "https://s3-media4.fl.yelpcdn.com/bphoto/7GeuoN2YU-spsmg2syOCCg/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/the-parlour-providence-2?adjust_creative=K_whzZty-KJG1VSC1-k6YQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=K_whzZty-KJG1VSC1-k6YQ",
+      "review_count": 70,
+      "categories": [
+        {
+          "alias": "karaoke",
+          "title": "Karaoke"
+        },
+        {
+          "alias": "musicvenues",
+          "title": "Music Venues"
+        }
+      ],
+      "rating": 4.5,
+      "coordinates": {
+        "latitude": 41.851241,
+        "longitude": -71.402072
+      },
+      "transactions": [],
+      "price": "$",
+      "location": {
+        "address1": "1119 N Main St",
+        "address2": "",
+        "address3": "",
+        "city": "Providence",
+        "zip_code": "02904",
+        "country": "US",
+        "state": "RI",
+        "display_address": [
+          "1119 N Main St",
+          "Providence, RI 02904"
+        ]
+      },
+      "phone": "+14013835858",
+      "display_phone": "(401) 383-5858",
+      "distance": 3208.0401017484046
+    },
+    {
+      "id": "diQNqZ-wt1CFC4HMwZyLOA",
+      "alias": "langs-bowlarama-cranston-2",
+      "name": "Lang's Bowlarama",
+      "image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/yw6qeD5lPPZri36FZth5ww/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/langs-bowlarama-cranston-2?adjust_creative=K_whzZty-KJG1VSC1-k6YQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=K_whzZty-KJG1VSC1-k6YQ",
+      "review_count": 62,
+      "categories": [
+        {
+          "alias": "bowling",
+          "title": "Bowling"
+        }
+      ],
+      "rating": 4.0,
+      "coordinates": {
+        "latitude": 41.7966399,
+        "longitude": -71.4402
+      },
+      "transactions": [],
+      "location": {
+        "address1": "225 Niantic Ave",
+        "address2": null,
+        "address3": "",
+        "city": "Cranston",
+        "zip_code": "02907",
+        "country": "US",
+        "state": "RI",
+        "display_address": [
+          "225 Niantic Ave",
+          "Cranston, RI 02907"
+        ]
+      },
+      "phone": "+14019440500",
+      "display_phone": "(401) 944-0500",
+      "distance": 3622.6916537204083
+    },
+    {
+      "id": "qQFAiu6lfkkSzIL_ejtmqA",
+      "alias": "lovecraft-arts-and-sciences-council-providence",
+      "name": "Lovecraft Arts & Sciences Council",
+      "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/QHZF0LEEKmuO11qcZpEvzw/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/lovecraft-arts-and-sciences-council-providence?adjust_creative=K_whzZty-KJG1VSC1-k6YQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=K_whzZty-KJG1VSC1-k6YQ",
+      "review_count": 11,
+      "categories": [
+        {
+          "alias": "galleries",
+          "title": "Art Galleries"
+        },
+        {
+          "alias": "bookstores",
+          "title": "Bookstores"
+        },
+        {
+          "alias": "nonprofit",
+          "title": "Community Service/Non-Profit"
+        }
+      ],
+      "rating": 4.5,
+      "coordinates": {
+        "latitude": 41.823795,
+        "longitude": -71.410247
+      },
+      "transactions": [],
+      "price": "$$",
+      "location": {
+        "address1": "65 Weybosset St",
+        "address2": "Unit 105",
+        "address3": "",
+        "city": "Providence",
+        "zip_code": "02903",
+        "country": "US",
+        "state": "RI",
+        "display_address": [
+          "65 Weybosset St",
+          "Unit 105",
+          "Providence, RI 02903"
+        ]
+      },
+      "phone": "+14012640838",
+      "display_phone": "(401) 264-0838",
+      "distance": 740.3111851251405
+    },
+    {
+      "id": "jK3Aw176GybC81VqvheMDA",
+      "alias": "providence-performing-arts-center-providence",
+      "name": "Providence Performing Arts Center",
+      "image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/ehcu5OYNyTJ00stddjZGvg/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/providence-performing-arts-center-providence?adjust_creative=K_whzZty-KJG1VSC1-k6YQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=K_whzZty-KJG1VSC1-k6YQ",
+      "review_count": 133,
+      "categories": [
+        {
+          "alias": "theater",
+          "title": "Performing Arts"
+        }
+      ],
+      "rating": 4.5,
+      "coordinates": {
+        "latitude": 41.8210671,
+        "longitude": -71.4119577
+      },
+      "transactions": [],
+      "location": {
+        "address1": "220 Weybosset St",
+        "address2": "",
+        "address3": "",
+        "city": "Providence",
+        "zip_code": "02903",
+        "country": "US",
+        "state": "RI",
+        "display_address": [
+          "220 Weybosset St",
+          "Providence, RI 02903"
+        ]
+      },
+      "phone": "+14014212787",
+      "display_phone": "(401) 421-2787",
+      "distance": 737.0612697338083
+    },
+    {
+      "id": "t4KNMMicJAXk0uxs8dnnIw",
+      "alias": "providence-picture-frame-north-providence",
+      "name": "Providence Picture Frame",
+      "image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/p4CME_Kt46Uuik1lWpPiyg/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/providence-picture-frame-north-providence?adjust_creative=K_whzZty-KJG1VSC1-k6YQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=K_whzZty-KJG1VSC1-k6YQ",
+      "review_count": 31,
+      "categories": [
+        {
+          "alias": "galleries",
+          "title": "Art Galleries"
+        },
+        {
+          "alias": "framing",
+          "title": "Framing"
+        },
+        {
+          "alias": "copyshops",
+          "title": "Printing Services"
+        }
+      ],
+      "rating": 4.5,
+      "coordinates": {
+        "latitude": 41.86725,
+        "longitude": -71.43709
+      },
+      "transactions": [],
+      "price": "$$$",
+      "location": {
+        "address1": "1350 Mineral Spring Ave",
+        "address2": null,
+        "address3": "",
+        "city": "North Providence",
+        "zip_code": "02904",
+        "country": "US",
+        "state": "RI",
+        "display_address": [
+          "1350 Mineral Spring Ave",
+          "North Providence, RI 02904"
+        ]
+      },
+      "phone": "+14014216196",
+      "display_phone": "(401) 421-6196",
+      "distance": 4911.261565203028
+    },
+    {
+      "id": "Q1Pbc0O1fkEQZ4vTBqpvyQ",
+      "alias": "providence-place-providence",
+      "name": "Providence Place",
+      "image_url": "https://s3-media4.fl.yelpcdn.com/bphoto/x6juCSg3KP3tNZ9oR4stlg/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/providence-place-providence?adjust_creative=K_whzZty-KJG1VSC1-k6YQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=K_whzZty-KJG1VSC1-k6YQ",
+      "review_count": 250,
+      "categories": [
+        {
+          "alias": "shoppingcenters",
+          "title": "Shopping Centers"
+        }
+      ],
+      "rating": 3.0,
+      "coordinates": {
+        "latitude": 41.8276547,
+        "longitude": -71.4175903
+      },
+      "transactions": [],
+      "price": "$$",
+      "location": {
+        "address1": "One Providence Place",
+        "address2": "",
+        "address3": "",
+        "city": "Providence",
+        "zip_code": "02903",
+        "country": "US",
+        "state": "RI",
+        "display_address": [
+          "One Providence Place",
+          "Providence, RI 02903"
+        ]
+      },
+      "phone": "+14012701000",
+      "display_phone": "(401) 270-1000",
+      "distance": 473.10828840361336
+    },
+    {
+      "id": "XprPVF8gfsofFKPEzNF8Eg",
+      "alias": "fête-music-hall-providence",
+      "name": "Fête Music Hall",
+      "image_url": "https://s3-media4.fl.yelpcdn.com/bphoto/myE0hd6sMyJUgDeV_Huwlg/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/f%C3%AAte-music-hall-providence?adjust_creative=K_whzZty-KJG1VSC1-k6YQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=K_whzZty-KJG1VSC1-k6YQ",
+      "review_count": 81,
+      "categories": [
+        {
+          "alias": "musicvenues",
+          "title": "Music Venues"
+        },
+        {
+          "alias": "venues",
+          "title": "Venues & Event Spaces"
+        },
+        {
+          "alias": "social_clubs",
+          "title": "Social Clubs"
+        }
+      ],
+      "rating": 3.5,
+      "coordinates": {
+        "latitude": 41.816017,
+        "longitude": -71.443376
+      },
+      "transactions": [],
+      "price": "$$",
+      "location": {
+        "address1": "103 Dike St",
+        "address2": "",
+        "address3": "",
+        "city": "Providence",
+        "zip_code": "02909",
+        "country": "US",
+        "state": "RI",
+        "display_address": [
+          "103 Dike St",
+          "Providence, RI 02909"
+        ]
+      },
+      "phone": "+14013831112",
+      "display_phone": "(401) 383-1112",
+      "distance": 2273.255086332207
+    },
+    {
+      "id": "ZSPTvvcvFANwdg4iK9VKiA",
+      "alias": "providence-place-cinemas-16-and-imax-providence-2",
+      "name": "Providence Place Cinemas 16 and IMAX",
+      "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/ByQ0Hi2mz_qi_LwwUIP36w/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/providence-place-cinemas-16-and-imax-providence-2?adjust_creative=K_whzZty-KJG1VSC1-k6YQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=K_whzZty-KJG1VSC1-k6YQ",
+      "review_count": 127,
+      "categories": [
+        {
+          "alias": "movietheaters",
+          "title": "Cinema"
+        }
+      ],
+      "rating": 3.0,
+      "coordinates": {
+        "latitude": 41.8268645,
+        "longitude": -71.41702
+      },
+      "transactions": [],
+      "location": {
+        "address1": "10 Providence Pl",
+        "address2": "",
+        "address3": "",
+        "city": "Providence",
+        "zip_code": "02903",
+        "country": "US",
+        "state": "RI",
+        "display_address": [
+          "10 Providence Pl",
+          "Providence, RI 02903"
+        ]
+      },
+      "phone": "+18003154000",
+      "display_phone": "(800) 315-4000",
+      "distance": 238.84917524261226
+    },
+    {
+      "id": "r-ZuBFFa35rg6L4-WK7P4w",
+      "alias": "party-vision-amherst",
+      "name": "Party Vision",
+      "image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/wEGzlVpqLCEs4owMuTJ2Ng/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/party-vision-amherst?adjust_creative=K_whzZty-KJG1VSC1-k6YQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=K_whzZty-KJG1VSC1-k6YQ",
+      "review_count": 3,
+      "categories": [
+        {
+          "alias": "djs",
+          "title": "DJs"
+        },
+        {
+          "alias": "eventplanning",
+          "title": "Party & Event Planning"
+        },
+        {
+          "alias": "photoboothrentals",
+          "title": "Photo Booth Rentals"
+        }
+      ],
+      "rating": 3.5,
+      "coordinates": {
+        "latitude": 42.8061950951815,
+        "longitude": -71.5837517380714
+      },
+      "transactions": [],
+      "location": {
+        "address1": "29 Northern Blvd",
+        "address2": null,
+        "address3": null,
+        "city": "Amherst",
+        "zip_code": "03031",
+        "country": "US",
+        "state": "NH",
+        "display_address": [
+          "29 Northern Blvd",
+          "Amherst, NH 03031"
+        ]
+      },
+      "phone": "+16038828805",
+      "display_phone": "(603) 882-8805",
+      "distance": 109445.08742531235
+    },
+    {
+      "id": "IDCEULJShjttOwielYtFoA",
+      "alias": "iolabs-east-providence",
+      "name": "iolabs",
+      "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/QgfzqEs2xa_GMNoc6wGnOA/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/iolabs-east-providence?adjust_creative=K_whzZty-KJG1VSC1-k6YQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=K_whzZty-KJG1VSC1-k6YQ",
+      "review_count": 1,
+      "categories": [
+        {
+          "alias": "galleries",
+          "title": "Art Galleries"
+        },
+        {
+          "alias": "copyshops",
+          "title": "Printing Services"
+        },
+        {
+          "alias": "framing",
+          "title": "Framing"
+        }
+      ],
+      "rating": 5.0,
+      "coordinates": {
+        "latitude": 41.825195,
+        "longitude": -71.374931
+      },
+      "transactions": [],
+      "location": {
+        "address1": "199 Anthony St",
+        "address2": "",
+        "address3": "",
+        "city": "East Providence",
+        "zip_code": "02914",
+        "country": "US",
+        "state": "RI",
+        "display_address": [
+          "199 Anthony St",
+          "East Providence, RI 02914"
+        ]
+      },
+      "phone": "+14014315227",
+      "display_phone": "(401) 431-5227",
+      "distance": 3643.4348179058447
+    },
+    {
+      "id": "797TSUf76icUb_jtWnGDKg",
+      "alias": "olympic-records-providence",
+      "name": "Olympic Records",
+      "image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/329im2HJ_koKwQcj8hu1IA/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/olympic-records-providence?adjust_creative=K_whzZty-KJG1VSC1-k6YQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=K_whzZty-KJG1VSC1-k6YQ",
+      "review_count": 41,
+      "categories": [
+        {
+          "alias": "vinyl_records",
+          "title": "Vinyl Records"
+        }
+      ],
+      "rating": 4.5,
+      "coordinates": {
+        "latitude": 41.8204307,
+        "longitude": -71.3915645
+      },
+      "transactions": [],
+      "price": "$$",
+      "location": {
+        "address1": "580 Wickenden St",
+        "address2": "",
+        "address3": "",
+        "city": "Providence",
+        "zip_code": "02903",
+        "country": "US",
+        "state": "RI",
+        "display_address": [
+          "580 Wickenden St",
+          "Providence, RI 02903"
+        ]
+      },
+      "phone": "+14013019266",
+      "display_phone": "(401) 301-9266",
+      "distance": 2340.789273443599
+    }
+  ],
+  "total": 15,
+  "region": {
+    "center": {
+      "longitude": -71.418884,
+      "latitude": 41.825226
+    }
+  }
+}
