@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { StatusBar } from "expo-status-bar";
 import {
   ScrollView,
   TouchableOpacity,
@@ -9,7 +8,7 @@ import {
 } from "react-native";
 import { supabase } from "../../initSupabase";
 import { AuthStackParamList } from "../../types/navigation";
-import { StackScreenProps } from "@react-navigation/stack";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import {
   Layout,
   Text,
@@ -21,7 +20,7 @@ import {
 
 export default function ({
   navigation,
-}: StackScreenProps<AuthStackParamList, "ForgetPassword">) {
+}: NativeStackScreenProps<AuthStackParamList, "ForgetPassword">) {
   const { isDarkmode, setTheme } = useTheme();
   const [email, setEmail] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);

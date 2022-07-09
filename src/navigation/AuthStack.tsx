@@ -1,11 +1,11 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Login from '../screens/auth/Login';
 import Register from '../screens/auth/Register';
 import ForgetPassword from '../screens/auth/ForgetPassword';
 
-const AuthStack = createStackNavigator();
+const AuthStack = createNativeStackNavigator();
 const Auth = () => {
 	return (
 		<AuthStack.Navigator

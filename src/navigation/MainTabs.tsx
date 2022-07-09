@@ -1,27 +1,22 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { createStackNavigator } from '@react-navigation/stack';
-
 
 import { themeColor, useTheme } from "react-native-rapi-ui";
 import TabBarIcon from "../components/utils/TabBarIcon";
 import TabBarText from "../components/utils/TabBarText";
 
-import Home from "../screens/Home";
-import Random from "../screens/Random";
-import Profile from "../screens/Profile";
-import SingleCategoryScreen from '../screens/SingleCategoryScreen';
+import Bank from "../screens/Bank";
+import Reports from "../screens/Reports";
 import Main from './MainStack';
-
-
 
 const Tabs = createBottomTabNavigator();
 const MainTabs = () => {
   const { isDarkmode } = useTheme();
   return (
     <Tabs.Navigator
-      tabBarOptions={{
-        style: {
+      screenOptions={{
+        headerShown: false,
+        tabBarStyle: {
           borderTopWidth: 1,
           borderTopColor: isDarkmode ? themeColor.dark100 : "#c0c0c0",
           backgroundColor: isDarkmode ? themeColor.dark200 : "#fff",
@@ -41,27 +36,27 @@ const MainTabs = () => {
           ),
         }}
       />
-      {/* <Tabs.Screen
-        name="Profile"
-        component={Profile}
+      <Tabs.Screen
+        name="Bank"
+        component={Bank}
         options={{
           tabBarLabel: ({ focused }) => (
-            <TabBarText focused={focused} title="Profile" />
+            <TabBarText focused={focused} title="Bank" />
           ),
           tabBarIcon: ({ focused }) => (
-            <TabBarIcon focused={focused} icon={"person"} />
+            <TabBarIcon focused={focused} icon={"logo-usd"} />
           ),
         }}
-      /> */}
+      />
       <Tabs.Screen
-        name="Random"
-        component={Random}
+        name="Reports"
+        component={Reports}
         options={{
           tabBarLabel: ({ focused }) => (
-            <TabBarText focused={focused} title="Random" />
+            <TabBarText focused={focused} title="Reports" />
           ),
           tabBarIcon: ({ focused }) => (
-            <TabBarIcon focused={focused} icon={"ios-shuffle"} />
+            <TabBarIcon focused={focused} icon={"document"} />
           ),
         }}
       />

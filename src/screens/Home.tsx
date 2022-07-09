@@ -1,17 +1,13 @@
 import React from "react";
 import { View, Linking, TouchableHighlight } from "react-native";
-import { MainStackParamList } from "../types/navigation";
-import { StackScreenProps } from "@react-navigation/stack";
-import tailwind from "tailwind-rn";
+import { MainTabsParamList } from "../types/navigation";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { useTailwind } from "tailwind-rn";
 import { FlatGrid } from 'react-native-super-grid';
-import { supabase } from "../initSupabase";
 import {
   Layout,
-  Button,
   Text,
   TopNav,
-  Section,
-  SectionContent,
   useTheme,
   themeColor,
 } from "react-native-rapi-ui";
@@ -19,25 +15,16 @@ import { Ionicons } from "@expo/vector-icons";
 
 export default function ({
   navigation,
-}: StackScreenProps<MainStackParamList, "MainTabs">) {
+}: NativeStackScreenProps<MainTabsParamList, "Home">) {
+  const tailwind = useTailwind();
   const { isDarkmode, setTheme } = useTheme();
   const [items, setItems] = React.useState([
-      {name: 'Activities', code: '#1abc9c'},
-      // {name: 'Distance', code: '#3498db'},
+      {name: '212 WELLES STREET', code: '#1abc9c'},
+      {name: '23 PARADIS AVENUE', code: '#444795'},
   ]);
 
   function _onPressButton(category: string) {
-    console.log(category);
-
-    if(category === "Activities"){
-      navigation.navigate("CategoryList")
-    }
-
-    else {
-      navigation.navigate("Category", { name: category })
-      alert('You tapped the button!')
-    }
-    
+    navigation.navigate("Category", { name: category })
   }
 
   return (
@@ -71,38 +58,27 @@ export default function ({
       />
       <View
         style={{
-          // flex: 1,
-          // alignItems: "center",
+          flex: 1,
+          alignItems: "center",
           justifyContent: "center",
         }}
       >
-        {/* <Section style={{ marginTop: 0 }}>
-          <SectionContent> */}
-            {/* <Text fontWeight="bold" style={{ textAlign: "center" }}>
-              These UI components provided by Rapi UI
-            </Text>
-            <Button
-              style={{ marginTop: 10 }}
-              text="Rapi UI Documentation"
-              status="info"
-              onPress={() => Linking.openURL("https://rapi-ui.kikiding.space/")}
-            /> */}
-            <FlatGrid
-                itemDimension={85}
-                spacing={10}
-                data={[...items]}
-                renderItem={({ item }) => (
-                    <TouchableHighlight onPress={()=>_onPressButton(item.name)} > 
-                        {/* <View style={[styles.itemContainer, { backgroundColor: item.code }]}> */}
-                        <View style={[tailwind("justify-start rounded-lg p-3 h-10 w-24"), { backgroundColor: item.code }]}>
-                            <Text style={tailwind("font-semibold text-sm text-center")}>{item.name}</Text>
-                        </View>
-                    </TouchableHighlight>
-                )}
-            />
-{/*
-          </SectionContent>
-        </Section> */}
+        <Text style={{
+          fontSize: 20,
+        }}>Francois Rentals LLC</Text>
+      <FlatGrid
+          itemDimension={85}
+          spacing={10}
+          data={[...items]}
+          renderItem={({ item }) => (
+              <TouchableHighlight onPress={()=>_onPressButton(item.name)} >
+                  {/* <View style={[styles.itemContainer, { backgroundColor: item.code }]}> */}
+                  <View style={[tailwind("justify-start rounded-lg p-3 "), { backgroundColor: item.code }]}>
+                      <Text style={tailwind("font-semibold text-sm text-center")}>{item.name}</Text>
+                  </View>
+              </TouchableHighlight>
+          )}
+      />
       </View>
     </Layout>
   );

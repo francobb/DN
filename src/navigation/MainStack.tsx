@@ -1,12 +1,11 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+// @ts-ignore
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import CategoryList from '../screens/CategoryList';
-import MainTabs from './MainTabs';
-import SingleCategoryScreen from '../screens/SingleCategoryScreen';
+import Bank from "../screens/Bank";
 import Profile from '../screens/Profile';
-import { TabRouter } from '@react-navigation/native';
 import Home from '../screens/Home';
+import Reports from "../screens/Reports";
 import Category from '../screens/Category'
 import { MainTabsParamList } from "../types/navigation";
 
@@ -18,12 +17,12 @@ type Prop = {
 }
 
 type RootStackParamList = {
-	Home: undefined;
-	Profile: { userId: string };
-	Feed: { sort: 'latest' | 'top' } | undefined;
+	// Home: undefined;
+	// Profile: { userId: string };
+	// Feed: { sort: 'latest' | 'top' } | undefined;
 };
 
-const HomeStack = createStackNavigator<MainTabsParamList>();
+const HomeStack = createNativeStackNavigator<MainTabsParamList>();
 const Stack = () => {
   return (
     <HomeStack.Navigator
@@ -32,7 +31,8 @@ const Stack = () => {
     }}>
 			<HomeStack.Screen name="Home" component={Home} />
 			<HomeStack.Screen name="Profile" component={Profile} />
-			<HomeStack.Screen name="CategoryList" component={CategoryList} />	
+			<HomeStack.Screen name="Bank" component={Bank} />
+			<HomeStack.Screen name="Reports" component={Reports} />
 			<HomeStack.Screen name="Category" component={Category} />
     </HomeStack.Navigator>
   )

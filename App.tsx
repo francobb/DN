@@ -3,6 +3,9 @@ import React from "react";
 import { ThemeProvider } from "react-native-rapi-ui";
 import Navigation from "./src/navigation";
 import { AuthProvider } from "./src/provider/AuthProvider";
+import {TailwindProvider} from 'tailwind-rn';
+import utilities from './tailwind.json';
+
 
 export default function App() {
   const images = [
@@ -11,11 +14,13 @@ export default function App() {
     require("./assets/images/forget.png"),
   ];
   return (
-    <ThemeProvider images={images}>
-      <AuthProvider>
-        <Navigation />
-      </AuthProvider>
-      <StatusBar />
-    </ThemeProvider>
+      <ThemeProvider images={images}>
+        <AuthProvider>
+        <TailwindProvider utilities={utilities}>
+          <Navigation />
+        </TailwindProvider>
+        </AuthProvider>
+        <StatusBar />
+      </ThemeProvider>
   );
 }

@@ -1,8 +1,8 @@
 import React from 'react';
-import { Linking, View, Text } from 'react-native';
+import { Linking, View } from 'react-native';
 import { MainTabsParamList } from "../types/navigation";
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Button, Layout, Section, themeColor, TopNav, useTheme } from 'react-native-rapi-ui';
+import { Button, Layout, Section, SectionContent, Text, themeColor, TopNav, useTheme } from 'react-native-rapi-ui';
 import { supabase } from '../initSupabase';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -16,7 +16,6 @@ export default function ({
 			<TopNav
 				middleContent="Settings"
 				leftContent = {
-					// @ts-ignore
 					<Ionicons
 						name="chevron-back"
 						size={20}
@@ -25,7 +24,6 @@ export default function ({
 				}
 				leftAction={() => navigation.goBack()}
 				rightContent = {
-					// @ts-ignore
 					<Ionicons
 						name={isDarkmode ? "sunny" : "moon"}
 						size={20}
@@ -42,22 +40,15 @@ export default function ({
 				}
 			/>
 			<View>
-				{/*<Section style={{ marginTop: 0 }}>*/}
-						<Text
+				<Section style={{ marginTop: 0 }}>
+					<SectionContent>
+						<Text 
 							style={{color: 'blue'}}
-							onPress={async () => {
-								const { error } = await supabase.auth.signOut();
-								if (!error) {
-									alert("Signed out!");
-								}
-								if (error) {
-									alert(error.message);
-								}
-							}}
 						>
-							Log Out
+							Reports Page Where you can see a breakdown of the units
 						</Text>
-				{/*</Section>*/}
+					</SectionContent>
+				</Section>
 			</View>
 		</Layout>
 	);
