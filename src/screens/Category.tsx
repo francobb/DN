@@ -5,7 +5,6 @@ import { View, FlatList, StyleSheet } from "react-native";
 import { withHooksHOC } from "./utils/useThemeHOC";
 import arcadesData from "../api/arcades.json"
 import { useTailwind } from "tailwind-rn";
-
 import { MainTabsParamList } from "../types/navigation";
 import { NativeStackScreenProps } from "react-native-screens/native-stack";
 
@@ -27,8 +26,15 @@ const Item = ({ units }: House) => {
   return (
     <View style={tailwind("flex text-center justify-center")}>
       {units.map((u, i) => (
-        <View key={i}
-              style={[tailwind("border-4 border-green-900 border-solid w-80 rounded-lg mt-5"), styles.flex_box2]}>
+        <View
+          key={i}
+          style={[
+            tailwind(
+              "border-4 border-green-900 border-solid w-80 rounded-lg mt-5"
+            ),
+            styles.flex_box2
+          ]}
+        >
           <View style={styles.rank_box2}>
             <Text style={styles.rank2}>Tenant</Text>
             <Text style={styles.rank2}>Rent</Text>

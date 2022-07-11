@@ -8,12 +8,10 @@ import {
   TopNav,
   Text,
   themeColor,
-  useTheme, SectionContent, Section,
+  useTheme
 } from "react-native-rapi-ui";
 import { Ionicons } from "@expo/vector-icons";
 import { useTailwind } from "tailwind-rn";
-import { supabase } from "../initSupabase";
-
 
 export default function ({
   navigation,
@@ -58,20 +56,34 @@ function _onPressButton(category: string) {
       <View
         style={{}}
       >
-        {/*<Section style={{ marginTop: 0 }}>*/}
-            <View style={[{alignItems: "center"},tailwind("flex justify-center text-center")]}>
-              <Text>Available Balance:</Text>
+        <View style={[{alignItems: "center"}]}>
+          <Text>Available Balance:</Text>
+        </View>
+        <View>
+          <Text style={tailwind("text-3xl text-center")}>$6500.00</Text>
+          <Text style={tailwind("text-lg text-center")}>Recent Transactions</Text>
+        </View>
+        <View style={tailwind(
+          "mt-5 items-center"
+          )}
+        >
+          <View style={[tailwind("w-80 flex flex-row justify-around")]}>
+            <View>
+              <Text style={tailwind("")}>[ Owner Payment ]</Text>
+              <Text style={tailwind("")}>[ 212 Welles Loan ]</Text>
+              <Text style={tailwind("")}>[ 23 Paradis Loan ]</Text>
+              <Text style={tailwind("")}>[ Owner Payment ]</Text>
+              <Text style={tailwind("")}>[ Legal Zoom Payment ]</Text>
             </View>
             <View>
-              <Text style={tailwind("text-3xl text-center")}>$6500.00</Text>
+              <Text style={tailwind("")}>+1,150.00</Text>
+              <Text style={tailwind("")}>(-1,965.95)</Text>
+              <Text style={tailwind("")}>(-2,460.81)</Text>
+              <Text style={tailwind("")}>+4,016.95</Text>
+              <Text style={tailwind("")}>(-80.77)</Text>
             </View>
-            <View style={tailwind("mt-5")}>
-              <Text style={tailwind("text-lg text-center")}>Recent Transactions</Text>
-              <View style={tailwind("flex")}>
-                <Text style={tailwind("flex justify-between")}>[Legal Zoom] <Text style={tailwind("text-right")}>$-80.77</Text></Text>
-              </View>
-            </View>
-        {/*</Section>*/}
+          </View>
+        </View>
       </View>
     </Layout>
   );
