@@ -8,6 +8,7 @@ import Home from '../screens/Home';
 import Reports from "../screens/Reports";
 import Category from '../screens/Category'
 import { MainTabsParamList } from "../types/navigation";
+import { BankInfo } from "../screens/BankInfo";
 
 interface Route {
 	params: {}
@@ -33,6 +34,7 @@ const Stack = () => {
 			<HomeStack.Screen name="Profile" component={Profile} />
 			<HomeStack.Screen name="Bank" component={Bank} />
 			<HomeStack.Screen name="Reports" component={Reports} />
+			<HomeStack.Screen name="BankInfo" component={BankInfo} />
 			<HomeStack.Screen name="Category" component={Category} />
     </HomeStack.Navigator>
   )

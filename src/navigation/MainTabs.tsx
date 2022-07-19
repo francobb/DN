@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import { themeColor, useTheme } from "react-native-rapi-ui";
@@ -8,10 +8,17 @@ import TabBarText from "../components/utils/TabBarText";
 import Bank from "../screens/Bank";
 import Reports from "../screens/Reports";
 import Main from './MainStack';
+import { Context } from "../provider/PlaidProvider";
+import { BankInfo } from "../screens/BankInfo";
 
 const Tabs = createBottomTabNavigator();
 const MainTabs = () => {
   const { isDarkmode } = useTheme();
+  const { linkSuccess, isItemAccess, dispatch, publicToken } = useContext(Context);
+
+  const BankComponent = (linkSuccess && publicToken && isItemAccess) ? BankInfo : Bank;
+  console.log({BankComponent});
+
   return (
     <Tabs.Navigator
       screenOptions={{
@@ -23,13 +30,12 @@ const MainTabs = () => {
         },
       }}
     >
-      {/* these icons using Ionicons */}
       <Tabs.Screen
-        name="Home"
+        name="Main"
         component={Main}
         options={{
           tabBarLabel: ({ focused }) => (
-            <TabBarText focused={focused} title="Home" />
+            <TabBarText focused={focused} title="Main" />
           ),
           tabBarIcon: ({ focused }) => (
             <TabBarIcon focused={focused} icon={"md-home"} />
@@ -38,7 +44,7 @@ const MainTabs = () => {
       />
       <Tabs.Screen
         name="Bank"
-        component={Bank}
+        component={BankComponent}
         options={{
           tabBarLabel: ({ focused }) => (
             <TabBarText focused={focused} title="Bank" />

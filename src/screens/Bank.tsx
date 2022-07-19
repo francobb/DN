@@ -1,29 +1,126 @@
-import React from "react";
-import { View, TouchableHighlight } from "react-native";
+// @ts-nocheck
+import React, { useContext, useCallback, useEffect, useState } from "react";
+import { Ionicons } from "@expo/vector-icons";
+import { useTailwind } from "tailwind-rn";
 import { MainTabsParamList } from "../types/navigation";
-// @ts-ignore
-import { StackScreenProps } from "@react-navigation/native-stack";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import {
   Layout,
   TopNav,
-  Text,
   themeColor,
-  useTheme
-} from "react-native-rapi-ui";
-import { Ionicons } from "@expo/vector-icons";
-import { useTailwind } from "tailwind-rn";
+  useTheme,} from "react-native-rapi-ui";
+import { Context } from "../provider/PlaidProvider";
+import {
+  create_token_endpoint,
+  getData,
+  info_endpoint,
+  set_access_token,
+  storeData} from "../api";
+import PlaidLink from "../components/plaid/PlaidLink";
 
 export default function ({
   navigation,
-}: StackScreenProps<MainTabsParamList, "Bank">) {
+}: NativeStackScreenProps<MainTabsParamList, "Bank">) {
   const tailwind = useTailwind();
-  const [items, setItems] = React.useState([]);
-function _onPressButton(category: string) {
-  navigation.navigate("Category", { name: category })
-  alert('You tapped the button!')
-}
-
   const { isDarkmode, setTheme } = useTheme();
+  const [tokenLink, setTokenLink] = useState(null);
+  const [tokenExpiration, setTokenExpiration] = useState(null);
+  const { dispatch } = useContext(Context);
+
+  const getInfo = useCallback(
+    async (message?: any) => {
+      const response = await fetch(info_endpoint, { method: "POST" });
+      if (!response.ok) {
+        dispatch({ type: "SET_STATE", state: { backend: false } });
+        return { paymentInitiation: false };
+      }
+      const data = await response.json();
+      dispatch({
+        type: "SET_STATE",
+        state: {
+          products: data.products,
+        },
+      });
+    },
+    [dispatch]
+  );
+  const generateToken = useCallback(async () => {
+    let obj = getData().then((r) => {
+      console.log("done getting token from storage", r);
+      return r;
+    });
+    let link_token = obj["link_token"];
+    let expiration = obj["expiration"];
+    if (link_token) {
+      console.log("[:::::: TOKEN EXISTS ::::: ]");
+      setTokenLink(link_token);
+      setTokenExpiration(expiration);
+      dispatch({ type: "SET_STATE", state: { link_token } });
+    } else {
+      console.log("[:::::: GENERATING TOKEN ::::: ]");
+      const response = await fetch(create_token_endpoint, { method: "POST" });
+      if (!response.ok) {
+        dispatch({ type: "SET_STATE", state: { linkToken: null } });
+        return;
+      }
+      const data = await response.json();
+      if (data) {
+        if (data.error != null) {
+          dispatch({
+            type: "SET_STATE",
+            state: {
+              linkToken: null,
+              linkTokenError: data.error,
+            },
+          });
+          return;
+        }
+        setTokenLink(data.link_token);
+        setTokenExpiration(data.expiration);
+        dispatch({ type: "SET_STATE", state: { linkToken: data.link_token } });
+      }
+      let { link_token, expiration } = data;
+      await storeData({ link_token, expiration }, '@link_token');
+    }
+  }, [dispatch]);
+  const setAccessToken = useCallback(async (public_token) => {
+    const response = await fetch(set_access_token, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+      },
+      body: `public_token=${public_token}`,
+    });
+    if (!response.ok) {
+      dispatch({
+        type: "SET_STATE",
+        state: {
+          itemId: `no item_id retrieved`,
+          accessToken: `no access_token retrieved`,
+          isItemAccess: false,
+        },
+      });
+      return;
+    }
+    const data = await response.json();
+    dispatch({
+      type: "SET_STATE",
+      state: {
+        itemId: data.item_id,
+        accessToken: data.access_token,
+        isItemAccess: true,
+      },
+    });
+  }, [dispatch]);
+
+  useEffect(() => {
+    const init = async () => {
+      // await getInfo();
+      await generateToken();
+    };
+    init().then((r) => console.log("done generating token"));
+  }, [dispatch, generateToken, getInfo]);
+
   return (
     <Layout>
       <TopNav
@@ -53,38 +150,21 @@ function _onPressButton(category: string) {
           }
         }}
       />
-      <View
-        style={{}}
-      >
-        <View style={[{alignItems: "center"}]}>
-          <Text>Available Balance:</Text>
-        </View>
-        <View>
-          <Text style={tailwind("text-3xl text-center")}>$6500.00</Text>
-          <Text style={tailwind("text-lg text-center")}>Recent Transactions</Text>
-        </View>
-        <View style={tailwind(
-          "mt-5 items-center"
-          )}
-        >
-          <View style={[tailwind("w-80 flex flex-row justify-around")]}>
-            <View>
-              <Text style={tailwind("")}>[ Owner Payment ]</Text>
-              <Text style={tailwind("")}>[ 212 Welles Loan ]</Text>
-              <Text style={tailwind("")}>[ 23 Paradis Loan ]</Text>
-              <Text style={tailwind("")}>[ Owner Payment ]</Text>
-              <Text style={tailwind("")}>[ Legal Zoom Payment ]</Text>
-            </View>
-            <View>
-              <Text style={tailwind("")}>+1,150.00</Text>
-              <Text style={tailwind("")}>(-1,965.95)</Text>
-              <Text style={tailwind("")}>(-2,460.81)</Text>
-              <Text style={tailwind("")}>+4,016.95</Text>
-              <Text style={tailwind("")}>(-80.77)</Text>
-            </View>
-          </View>
-        </View>
-      </View>
+      <PlaidLink
+        linkToken={tokenLink}
+        // onEvent={(event) => console.log("[EVENT DATA] :::: ",{ event })}
+        onExit={(exit) => console.log(":::: DID NOT WORK :::: ", { exit })}
+        // onSuccess={(success) => console.log(success.publicToken)}
+        onSuccess={async (success) => {
+          console.log("success. should be able to grab account balance", { success });
+          await storeData(success.publicToken, '@publicToken');
+          await setAccessToken(success.publicToken);
+          dispatch({ type: "SET_STATE", state:
+              { linkSuccess: true, publicToken: success.publicToken }
+          });
+          navigation.navigate("BankInfo");
+        }}
+      />
     </Layout>
   );
 }

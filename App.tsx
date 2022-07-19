@@ -5,6 +5,7 @@ import Navigation from "./src/navigation";
 import { AuthProvider } from "./src/provider/AuthProvider";
 import {TailwindProvider} from 'tailwind-rn';
 import utilities from './tailwind.json';
+import { PlaidProvider } from "./src/provider/PlaidProvider";
 
 
 export default function App() {
@@ -16,9 +17,11 @@ export default function App() {
   return (
       <ThemeProvider images={images}>
         <AuthProvider>
-        <TailwindProvider utilities={utilities}>
-          <Navigation />
-        </TailwindProvider>
+          <PlaidProvider>
+            <TailwindProvider utilities={utilities}>
+              <Navigation />
+            </TailwindProvider>
+          </PlaidProvider>
         </AuthProvider>
         <StatusBar />
       </ThemeProvider>
