@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { StatusBar } from "expo-status-bar";
 import {
   ScrollView,
   TouchableOpacity,
@@ -7,10 +6,6 @@ import {
   KeyboardAvoidingView,
   Image,
 } from "react-native";
-import { supabase } from "../../initSupabase";
-import { AuthStackParamList } from "../../types/navigation";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-
 import {
   Layout,
   Text,
@@ -19,6 +14,10 @@ import {
   useTheme,
   themeColor,
 } from "react-native-rapi-ui";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { supabase } from "../../initSupabase";
+import { AuthStackParamList } from "../../types/navigation";
+
 
 export default function ({
   navigation,

@@ -17,7 +17,6 @@ const MainTabs = () => {
   const { linkSuccess, isItemAccess, dispatch, publicToken } = useContext(Context);
 
   const BankComponent = (linkSuccess && publicToken && isItemAccess) ? BankInfo : Bank;
-  console.log({BankComponent});
 
   return (
     <Tabs.Navigator

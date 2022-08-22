@@ -3,6 +3,7 @@ import { url } from "../api";
 import { TransactionsDataItem } from "../types/navigation";
 
 interface PlaidState {
+  files: any[]
   url: string;
   transactions: TransactionsDataItem[];
   balance: number | null;

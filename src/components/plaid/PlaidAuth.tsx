@@ -1,8 +1,6 @@
 import React, { useContext } from "react";
 import { View, Text } from "react-native";
 
-import Callout from "plaid-threads/Callout";
-
 import {Context} from "../../provider/PlaidProvider";
 
 const PlaidAuth = () => {

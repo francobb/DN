@@ -168,3 +168,10 @@ export default function ({
     </Layout>
   );
 }
+
+/*
+  TODO: after getting account data, bottom tab [Home] is active.
+   - need to set [Bank] as active.
+   - need ability to go back.
+   - cleanup typescript
+ */

@@ -7,3 +7,18 @@ export const formatCurrency = (
   }
   return "no data";
 };
+
+export const months = [
+  { label: "January", value: "Jan" },
+  { label: "February", value: "Feb" },
+  { label: "March", value: "Mar" },
+  { label: "April", value: "Apr" },
+  { label: "May", value: "May" },
+  { label: "June", value: "Jun" },
+  { label: "July", value: "Jul" },
+  { label: "August", value: "Aug" },
+  { label: "September", value: "Sept" },
+  { label: "October", value: "Oct" },
+  { label: "November", value: "Nov" },
+  { label: "December", value: "Dec" },
+];

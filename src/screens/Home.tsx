@@ -56,16 +56,8 @@ export default function ({
           }
         }}
       />
-      <View
-        style={{
-          flex: 1,
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Text style={{
-          fontSize: 20,
-        }}>Francois Rentals LLC</Text>
+      <View style={{ alignItems: "center", }} >
+        <Text style={{ fontSize: 20, }}> Francois Rentals LLC </Text>
       <FlatGrid
           itemDimension={85}
           spacing={10}
