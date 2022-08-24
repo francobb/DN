@@ -1,27 +1,10 @@
 import React from 'react';
-// @ts-ignore
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import Bank from "../screens/Bank";
 import Profile from '../screens/Profile';
 import Home from '../screens/Home';
-import Reports from "../screens/Reports";
-import Category from '../screens/Category'
+import SingleProperty from '../screens/SingleProperty'
 import { MainTabsParamList } from "../types/navigation";
-import { BankInfo } from "../screens/BankInfo";
-
-interface Route {
-	params: {}
-}
-type Prop = {
-	route: Route 
-}
-
-type RootStackParamList = {
-	// Home: undefined;
-	// Profile: { userId: string };
-	// Feed: { sort: 'latest' | 'top' } | undefined;
-};
 
 const HomeStack = createNativeStackNavigator<MainTabsParamList>();
 const Stack = () => {
@@ -32,10 +15,7 @@ const Stack = () => {
     }}>
 			<HomeStack.Screen name="Home" component={Home} />
 			<HomeStack.Screen name="Profile" component={Profile} />
-			<HomeStack.Screen name="Bank" component={Bank} />
-			<HomeStack.Screen name="Reports" component={Reports} />
-			<HomeStack.Screen name="BankInfo" component={BankInfo} />
-			<HomeStack.Screen name="Category" component={Category} />
+			<HomeStack.Screen name="Category" component={SingleProperty} />
     </HomeStack.Navigator>
   )
 };

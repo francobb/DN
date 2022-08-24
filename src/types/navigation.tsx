@@ -5,16 +5,28 @@ export type AuthStackParamList = {
 };
 
 export type MainTabsParamList = {
-	Bank: undefined;
-	BankInfo: undefined;
-	Category: {
-		name: string
+  Bank: undefined;
+  BankInfo: undefined;
+  Category: {
+    name: string;
+  };
+  CategoryList: undefined;
+  Home: undefined;
+  Profile: undefined;
+  Reports: undefined;
+  PDFViewer: {
+		uri: string;
 	};
-	CategoryList: undefined
-	Home: undefined;
-	Profile: undefined;
-	Reports: undefined;
 };
+
+export type ReportStackProps = {
+	Profile: undefined;
+	PDFs: undefined
+	PDFViewer: {
+		uri: string;
+	}
+};
+
 
 export interface ErrorDataItem {
 	error_type: string;
@@ -40,3 +52,12 @@ export type DataItem =
 	| BalanceDataItem
 
 export type Data = Array<DataItem>;
+
+export interface Route {
+	params: {}
+}
+
+export type Prop = {
+	route: Route
+}
+

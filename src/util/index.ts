@@ -17,7 +17,7 @@ export const months = [
   { label: "June", value: "Jun" },
   { label: "July", value: "Jul" },
   { label: "August", value: "Aug" },
-  { label: "September", value: "Sept" },
+  { label: "September", value: "Sep" },
   { label: "October", value: "Oct" },
   { label: "November", value: "Nov" },
   { label: "December", value: "Dec" },

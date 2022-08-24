@@ -30,7 +30,7 @@ export default function ({
   return (
     <Layout>
       <TopNav
-        middleContent="Home"
+        middleContent="Francois Rentals LLC"
         leftContent={
           <Ionicons
             name={isDarkmode ? "grid-outline" : "grid"}
@@ -57,15 +57,14 @@ export default function ({
         }}
       />
       <View style={{ alignItems: "center", }} >
-        <Text style={{ fontSize: 20, }}> Francois Rentals LLC </Text>
       <FlatGrid
-          itemDimension={85}
+          itemDimension={500}
           spacing={10}
           data={[...items]}
           renderItem={({ item }) => (
               <TouchableHighlight onPress={()=>_onPressButton(item.name)} >
                   {/* <View style={[styles.itemContainer, { backgroundColor: item.code }]}> */}
-                  <View style={[tailwind("justify-start rounded-lg p-3 "), { backgroundColor: item.code }]}>
+                  <View style={[tailwind("justify-start rounded-lg p-3 "), { backgroundColor: item.code, height: 100 }]}>
                       <Text style={tailwind("font-semibold text-sm text-center")}>{item.name}</Text>
                   </View>
               </TouchableHighlight>

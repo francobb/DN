@@ -6,10 +6,10 @@ import TabBarIcon from "../components/utils/TabBarIcon";
 import TabBarText from "../components/utils/TabBarText";
 
 import Bank from "../screens/Bank";
-import Reports from "../screens/Reports";
 import Main from './MainStack';
 import { Context } from "../provider/PlaidProvider";
 import { BankInfo } from "../screens/BankInfo";
+import Report from "./ReportStack";
 
 const Tabs = createBottomTabNavigator();
 const MainTabs = () => {
@@ -55,7 +55,7 @@ const MainTabs = () => {
       />
       <Tabs.Screen
         name="Reports"
-        component={Reports}
+        component={Report}
         options={{
           tabBarLabel: ({ focused }) => (
             <TabBarText focused={focused} title="Reports" />

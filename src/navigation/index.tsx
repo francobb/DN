@@ -1,12 +1,9 @@
 import React, { useContext } from 'react';
-import { AuthContext } from '../provider/AuthProvider';
-
 import { NavigationContainer } from '@react-navigation/native';
 
-import Main from './MainStack';
 import MainTabs from './MainTabs';
-
 import Auth from './AuthStack';
+import { AuthContext } from '../provider/AuthProvider';
 import Loading from '../screens/utils/Loading';
 
 export default () => {
