@@ -15,7 +15,7 @@ const Stack = () => {
     }}>
 			<HomeStack.Screen name="Home" component={Home} />
 			<HomeStack.Screen name="Profile" component={Profile} />
-			<HomeStack.Screen name="Category" component={SingleProperty} />
+			<HomeStack.Screen name="SingleProperty" component={SingleProperty} />
     </HomeStack.Navigator>
   )
 };

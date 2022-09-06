@@ -5,12 +5,9 @@ export type AuthStackParamList = {
 };
 
 export type MainTabsParamList = {
-  Bank: undefined;
-  BankInfo: undefined;
-  Category: {
-    name: string;
-  };
-  CategoryList: undefined;
+	SingleProperty: {
+		name: string;
+	};
   Home: undefined;
   Profile: undefined;
   Reports: undefined;
@@ -27,6 +24,10 @@ export type ReportStackProps = {
 	}
 };
 
+export type BankStackProps = {
+	Bank: undefined;
+	BankInfo: undefined;
+}
 
 export interface ErrorDataItem {
 	error_type: string;

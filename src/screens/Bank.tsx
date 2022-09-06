@@ -1,14 +1,12 @@
-// @ts-nocheck
 import React, { useContext, useCallback, useEffect, useState } from "react";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Ionicons } from "@expo/vector-icons";
 import { useTailwind } from "tailwind-rn";
-import { MainTabsParamList } from "../types/navigation";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import {
   Layout,
   TopNav,
   themeColor,
-  useTheme,} from "react-native-rapi-ui";
+  useTheme} from "react-native-rapi-ui";
 import { Context } from "../provider/PlaidProvider";
 import {
   create_token_endpoint,
@@ -17,15 +15,20 @@ import {
   set_access_token,
   storeData} from "../api";
 import PlaidLink from "../components/plaid/PlaidLink";
-
+import { BankStackProps } from "../types/navigation";
 export default function ({
   navigation,
-}: NativeStackScreenProps<MainTabsParamList, "Bank">) {
+}: NativeStackScreenProps<BankStackProps, "Bank">) {
   const tailwind = useTailwind();
   const { isDarkmode, setTheme } = useTheme();
-  const [tokenLink, setTokenLink] = useState(null);
-  const [tokenExpiration, setTokenExpiration] = useState(null);
+  const [tokenLink, setTokenLink] = useState<string | null>(null);
+  const [tokenExpiration, setTokenExpiration] = useState<number|null>(null);
   const { dispatch } = useContext(Context);
+
+  interface IToken {
+    link_token: string,
+    expiration: number
+  }
 
   const getInfo = useCallback(
     async (message?: any) => {
@@ -45,17 +48,21 @@ export default function ({
     [dispatch]
   );
   const generateToken = useCallback(async () => {
+    let link_token;
+    let expiration;
     let obj = getData().then((r) => {
       console.log("done getting token from storage", r);
+      link_token=r["link_token"];
+      expiration=r["expiration"];
       return r;
     });
-    let link_token = obj["link_token"];
-    let expiration = obj["expiration"];
-    if (link_token) {
+    // link_token = obj["link_token"];
+    // expiration = obj["expiration"];
+    if (link_token && expiration) {
       console.log("[:::::: TOKEN EXISTS ::::: ]");
       setTokenLink(link_token);
       setTokenExpiration(expiration);
-      dispatch({ type: "SET_STATE", state: { link_token } });
+      dispatch({ type: "SET_STATE", state: { linkToken: link_token } });
     } else {
       console.log("[:::::: GENERATING TOKEN ::::: ]");
       const response = await fetch(create_token_endpoint, { method: "POST" });
@@ -124,18 +131,16 @@ export default function ({
   return (
     <Layout>
       <TopNav
-        middleContent="Banking"
         leftContent={
-          // @ts-ignore
           <Ionicons
-            name="chevron-back"
+            name="refresh"
             size={20}
             color={isDarkmode ? themeColor.white100 : themeColor.dark}
           />
         }
-        leftAction={() => navigation.goBack()}
+        leftAction={()=>navigation.push('Bank')}
+        middleContent="Banking"
         rightContent={
-          // @ts-ignore
           <Ionicons
             name={isDarkmode ? "sunny" : "moon"}
             size={20}
@@ -153,9 +158,9 @@ export default function ({
       <PlaidLink
         linkToken={tokenLink}
         // onEvent={(event) => console.log("[EVENT DATA] :::: ",{ event })}
-        onExit={(exit) => console.log(":::: DID NOT WORK :::: ", { exit })}
+        onExit={(exit: ()=>void) => console.log(":::: DID NOT WORK :::: ", { exit })}
         // onSuccess={(success) => console.log(success.publicToken)}
-        onSuccess={async (success) => {
+        onSuccess={async (success: { publicToken: string; }) => {
           console.log("success. should be able to grab account balance", { success });
           await storeData(success.publicToken, '@publicToken');
           await setAccessToken(success.publicToken);
@@ -171,7 +176,8 @@ export default function ({
 
 /*
   TODO: after getting account data, bottom tab [Home] is active.
-   - need to set [Bank] as active.
-   - need ability to go back.
-   - cleanup typescript
+   - cleanup typescript [x]
+   - need ability to go back [x]
+   - need to set [Bank] as active. [x]
+   - cleanup component
  */

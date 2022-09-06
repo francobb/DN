@@ -3,14 +3,15 @@ import { Text, View } from "react-native";
 import { AccountsGetResponse, Transaction } from "plaid/dist/api";
 import { useTailwind } from "tailwind-rn";
 import { Context } from "../../provider/PlaidProvider";
+import {SectionContent, Section } from "react-native-rapi-ui";
 import { TransactionsDataItem } from "../../types/navigation";
 import { balance_endpoint, transactions_endpoint, transformBalanceData, transformTransactionsData } from "../../api";
 import { formatCurrency } from "../../util";
+import Card from "../card/Card";
 
 const ShowBalance = () => {
   const tailwind = useTailwind();
   const { dispatch, transactions, balance } = useContext(Context);
-
   const getBalance = useCallback(async () => {
     console.log("[:::::: GETTING BALANCE ::::: ]");
     const response = await fetch(balance_endpoint, {
@@ -71,27 +72,54 @@ const ShowBalance = () => {
   }, [dispatch, getBalance, getTransactions]);
 
   return (
-    <View style={[]}>
-      <Text style={tailwind("text-lg text-center")}>Available Balance:</Text>
-      <Text style={tailwind("text-3xl text-center")}>${balance}</Text>
-      <View style={tailwind("mt-5 items-center")}>
-        <Text style={tailwind("text-lg text-center")}>Recent Transactions</Text>
-        {transactions &&
-          transactions.map((t, i) => (
-            <View
-              key={i}
-              style={[tailwind("w-80 flex flex-row justify-between mt-5")]}
-            >
-              <View style={tailwind("")}>
-                <Text style={tailwind("")}>[ {t.name.substring(0, 15)} ]</Text>
+    <View style={[tailwind("mt-5")]}>
+      <Card style={{
+        paddingTop: 10, paddingBottom: 10,
+        margin: 20
+      }}>
+        <Text style={tailwind("text-lg text-center")}>Available Balance:</Text>
+        <Text style={tailwind("text-3xl text-center")}>${balance}</Text>
+      </Card>
+      {/*<View style={tailwind("mt-5 items-center")}>*/}
+      <View style={[tailwind("items-center"), {
+        elevation: 3,
+        shadowOffset:{ width: 0, height: 3 },
+        shadowRadius: 3,
+        shadowOpacity: .5
+      }]}>
+        <Section style={{}}>
+          <SectionContent style={{}}>
+          <Text style={tailwind("text-lg text-center")}>Recent Transactions</Text>
+          {
+            transactions && transactions.map((t, i) => (
+              <View
+                key={i}
+                style={[tailwind("w-80 flex flex-row justify-between mt-5")]}
+              >
+                <View style={tailwind("")}>
+                  <Text style={tailwind("")}>[ {t.name.substring(0, 15)} ]</Text>
+                </View>
+                <View style={tailwind("")}>
+                  <Text style={tailwind("")}>{-parseInt(t.amount)}</Text>
+                </View>
               </View>
-              <View style={tailwind("")}>
-                <Text style={tailwind("")}>{-parseInt(t.amount)}</Text>
-              </View>
-            </View>
-          ))}
+            ))
+          }
+          <View>
+            <Text style={[tailwind("text-center mt-5")]}>View More</Text>
+          </View>
+          </SectionContent>
+        </Section>
       </View>
     </View>
   );
 };
 export { ShowBalance }
+
+/*
+  TODO:
+    1) Cleanup component
+    2) Add functionality to view more button
+    3) rix typography
+
+ */

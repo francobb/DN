@@ -7,21 +7,22 @@ import {
   Text,
   themeColor,
   TopNav,
-  useTheme,
-} from "react-native-rapi-ui";
+  useTheme,} from "react-native-rapi-ui";
 import * as FileSystem from "expo-file-system";
-import * as Sharing from "expo-sharing";
 import { Ionicons } from "@expo/vector-icons";
+import { Section, SectionContent } from 'react-native-rapi-ui';
+
 import { useTailwind } from "tailwind-rn";
 
-import { MainTabsParamList } from "../types/navigation";
-import { months } from "../util";
-import { getFiles } from "../api";
-import { Context } from "../provider/PlaidProvider";
+import { ReportStackProps } from "../../types/navigation";
+import { months } from "../../util";
+import { getFiles } from "../../api";
+import { Context } from "../../provider/PlaidProvider";
+import Card from "../../components/card/Card";
 
 export default function ({
   navigation,
-}: NativeStackScreenProps<MainTabsParamList, "Home">) {
+}: NativeStackScreenProps<ReportStackProps, "PDFs">) {
   let tailwind = useTailwind();
   const { isDarkmode, setTheme } = useTheme();
   const [open, setOpen] = useState(false);
@@ -31,8 +32,9 @@ export default function ({
   const [items, setItems] = useState(months);
   const { dispatch } = useContext(Context);
 
+
   const fetchFiles = useCallback(async () => {
-    console.log("::: FETCHING FILES :::");
+    console.log("[:::: FETCHING FILES ::::]");
     const response = await fetch(getFiles, { method: "GET" });
     if (!response.ok) {
       console.log("::: ISSUE GETTING FILES ::: \n", { response });
@@ -41,8 +43,7 @@ export default function ({
     const data = await response.json();
     if (data) {
       setFiles(data);
-      // console.log("::: Data Returned :::", data[0], data.length);
-      console.log(":::: Data Returned :::: \n", data.length);
+      // console.log("[:::: DATA RETURNED ::::] \n", data.length);
       dispatch({ type: "SET_STATE", state: { files: data } });
     }
   }, [dispatch]);
@@ -50,39 +51,60 @@ export default function ({
   function getFileUri(name: string) {
     return FileSystem.documentDirectory + `${encodeURI(name)}`;
   }
-
-  // async function generatePdf(data, filename) {
   async function generatePdf(pdf: any) {
     const fileUri = getFileUri(pdf.name);
-    await FileSystem.writeAsStringAsync(fileUri, pdf.pdf, {
-      encoding: FileSystem.EncodingType.Base64,
-    });
-
-    let otherFileUri = FileSystem.documentDirectory + "text.txt";
-    await FileSystem.writeAsStringAsync(otherFileUri, "Hello World", {
-      encoding: FileSystem.EncodingType.UTF8,
-    });
-
-    // {
-    //   let pdfFile = await FileSystem.readAsStringAsync(fileUri, { encoding: FileSystem.EncodingType.Base64 })
-    //   console.log("::: THIS IS THE PDF FILE :::", { pdfFile });
-    // }
-
-    {
-      let dir = await FileSystem.readDirectoryAsync(
-        FileSystem.documentDirectory as string
-      );
-      console.log("This is what is in the directory ::: \n", { dir });
+    pdf.uri = fileUri;
+    if (pdf.pdf) {
+      await FileSystem.writeAsStringAsync(fileUri, pdf?.pdf, {
+        encoding: FileSystem.EncodingType.Base64,
+      });
     }
 
-    await Sharing.shareAsync(fileUri);
+    /**
+     *  [ Example of how to write to a text file locally ]
+     * {
+     *   let otherFileUri = FileSystem.documentDirectory + "text.txt";
+     *   await FileSystem.writeAsStringAsync(otherFileUri, "Hello World", {
+     *     encoding: FileSystem.EncodingType.UTF8,
+     *   });
+     * }
+     */
+
+    /**
+     * [ HOW TO READ THE PDF FILE ]
+     * {
+     *   let pdfFile = await FileSystem.readAsStringAsync(fileUri, { encoding: FileSystem.EncodingType.Base64 })
+     *   console.log("::: THIS IS THE PDF FILE :::", { pdfFile });
+     * }
+     */
+
+    /*
+      * **
+      *
+      * **
+      *   {
+      *      share functionality (if you have a pdf reader)
+      *     await Sharing.shareAsync(fileUri);
+      *   }
+     */
+
+    // {
+    //   let dir = await FileSystem.readDirectoryAsync(
+    //     FileSystem.documentDirectory as string
+    //   );
+    //   console.log("::: This is what is in the directory ::: \n", { dir });
+    // }
+
+    return pdf;
   }
 
   useEffect(() => {
     const init = async () => {
       await fetchFiles();
     };
-    init().then((r) => console.log("done fetching files"));
+    init()
+      .then((r) => console.log("[:::: DONE FETCHING FILES ::::]"))
+      .catch((e) => console.log("::: ERROR FETCHING FILES :::"));
   }, [dispatch, fetchFiles]);
 
   return (
@@ -114,7 +136,7 @@ export default function ({
       />
       <View>
         <View style={[{ zIndex: 100 }, tailwind("items-center mt-5")]}>
-          <View style={tailwind("w-80")}>
+          <View style={tailwind("w-80 mt-10")}>
             <DropDownPicker
               open={open}
               value={value}
@@ -123,6 +145,7 @@ export default function ({
               setValue={setValue}
               setItems={setItems}
               theme={isDarkmode ? "DARK" : "LIGHT"}
+              max={3}
               multiple={true}
               mode="BADGE"
               placeholder="Choose A Month"
@@ -163,34 +186,51 @@ export default function ({
             { flexDirection: "row", alignItems: "center", marginTop: 50 },
           ]}
         >
-          <View style={{ flex: 1, height: 1, backgroundColor: "black" }} />
-          <Text style={{ textAlign: "center" }}> Reports </Text>
-          <View style={{ flex: 1, height: 1, backgroundColor: "black" }} />
+          {/*// divider*/}
+          {/*{*/}
+          {/*  <View style={{ flex: 1, height: 1, backgroundColor: "black" }} />*/}
+          {/*  <Text style={{ textAlign: "center" }}> Reports </Text>*/}
+          {/*  <View style={{ flex: 1, height: 1, backgroundColor: "black" }} />*/}
+          {/*}*/}
+
+
         </View>
-        <View style={{ zIndex: 0 }}>
-          {filteredFiles.map((file, index) => {
-            return (
-              <View
-                key={index}
-                style={tailwind("justify-start rounded-lg p-3 ")}
-              >
-                <Button
-                  title={`${file.name} Report`}
-                  onPress={() => {
-                    // console.log("Pressed this report", {file})
-                    generatePdf(file)
-                      .then((res) =>
-                        console.log("::: Done generating PDF ::: ", { res })
-                      )
-                      .catch((e) =>
-                        console.log("::: ERROR Generating PDF ::: ", { e })
-                      );
-                  }}
-                />
-                {/*<Text style={tailwind("font-semibold text-sm text-center")}>{file.name}</Text>*/}
-              </View>
-            );
-          })}
+        <View
+          style={[tailwind("mt-5 items-center"), { zIndex: 0 }]}
+        >
+          {
+            filteredFiles.map((file, index) => {
+              generatePdf(file)
+                .then((res) => {
+                    // console.log("::: Done generating PDF ::: \n", { res });
+                    // gFile = res;
+                    return res;
+                  })
+                .catch((e) => console.log("::: ERROR Generating PDF ::: \n", { e }));
+
+              let name = months.find( (m) => m.value === file.name.substring(0, 3));
+              let year = file.name.substring(4, 8);
+
+              return (
+                <View
+                  key={index}
+                  style={tailwind("rounded-lg p-3 ")}
+                >
+                  {/*<View style={tailwind("")}>*/}
+                  {/*  <Text>Style me</Text>*/}
+                  {/*</View>*/}
+                  <Card>
+                    <Button
+                      title={`View ${name?.label} ${year} Report`}
+                      onPress={() => {
+                        navigation.navigate("PDFViewer", { uri: file.uri })
+                      }}
+                    />
+                  </Card>
+                </View>
+              );
+            })
+          }
         </View>
       </View>
     </Layout>
@@ -200,9 +240,11 @@ export default function ({
 /*
 TODO:
  1. save pdf buffer to file? [x]
- 2. find expo pdf viewer to view buffer pdf []
+ 2. find expo pdf viewer to view buffer pdf [x]
  3. cleanup component
+  - use better logging ? (bigger issue)
   - use dispatch
   - fix typescript issues (any)
-
+  - figure out better design ?
+  - use tailwind mostly
  */

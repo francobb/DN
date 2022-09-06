@@ -10,6 +10,7 @@ import Main from './MainStack';
 import { Context } from "../provider/PlaidProvider";
 import { BankInfo } from "../screens/BankInfo";
 import Report from "./ReportStack";
+import Banks from "./BankStack";
 
 const Tabs = createBottomTabNavigator();
 const MainTabs = () => {
@@ -43,7 +44,7 @@ const MainTabs = () => {
       />
       <Tabs.Screen
         name="Bank"
-        component={BankComponent}
+        component={Banks}
         options={{
           tabBarLabel: ({ focused }) => (
             <TabBarText focused={focused} title="Bank" />

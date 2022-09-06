@@ -7,7 +7,7 @@ import { useTailwind } from "tailwind-rn";
 
 import { withHooksHOC } from "./utils/useThemeHOC";
 import { MainTabsParamList } from "../types/navigation";
-import arcadesData from "../api/arcades.json"
+import properties from "../api/properties.json"
 
 type Unit = {
   name: string,
@@ -20,7 +20,6 @@ type House = {
   location: string,
   units: [Unit]
 }
-
 const Item = ({ units }: House) => {
   const tailwind = useTailwind();
   const styles = StyleSheet.create({
@@ -87,16 +86,16 @@ const Item = ({ units }: House) => {
   );
 };
 
-type Props = NativeStackScreenProps<MainTabsParamList, 'Category'>;
+type Props = NativeStackScreenProps<MainTabsParamList, 'SingleProperty'>;
 const SingleProperty = ({ route, navigation }: Props) => {
   const tailwind = useTailwind();
   const { isDarkmode, setTheme } = useTheme();
-  const [house, setHouse] = React.useState(arcadesData.houses.find(h => {
+  let icon = isDarkmode ? "sunny": "moon";
+  let house = properties.houses.find(h => {
     if (h && h.location.toString().includes(route.params.name)) {
       return h
     }
-  }))
-  let icon = isDarkmode ? "sunny": "moon";
+  });
 
   const renderItem = ({ item }: any) => {
     return (
@@ -151,3 +150,8 @@ const SingleProperty = ({ route, navigation }: Props) => {
     )
 };
 export default withHooksHOC(SingleProperty);
+
+/**
+ * todo:
+ *  1) convert styles to use tailwind
+ */
