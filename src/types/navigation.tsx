@@ -62,3 +62,11 @@ export type Prop = {
 	route: Route
 }
 
+export type file = {
+	name: string;
+	id: string;
+	pdf: string;
+	uri: string;
+}
+
+

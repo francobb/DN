@@ -19,6 +19,14 @@ export const storeData = async (value: any, key: any) => {
     console.log("error storing token " + e);
   }
 }
+ export const getData = async (key: any) => {
+   try {
+     let value = await AsyncStorage.getItem(key, (error, result) => {})
+     return JSON.parse(value as string)
+   } catch (e) {
+     console.log("error getting data " + e);
+   }
+ };
 
 export const getData = async () => {
   try {

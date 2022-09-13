@@ -10,7 +10,7 @@ import {
 import { Context } from "../provider/PlaidProvider";
 import {
   create_token_endpoint,
-  getData,
+  getTokenData,
   info_endpoint,
   set_access_token,
   storeData} from "../api";
@@ -50,21 +50,21 @@ export default function ({
   const generateToken = useCallback(async () => {
     let link_token;
     let expiration;
-    let obj = getData().then((r) => {
+    getTokenData().then((r) => {
       console.log("done getting token from storage", r);
       link_token=r["link_token"];
       expiration=r["expiration"];
       return r;
     });
-    // link_token = obj["link_token"];
-    // expiration = obj["expiration"];
     if (link_token && expiration) {
       console.log("[:::::: TOKEN EXISTS ::::: ]");
+
       setTokenLink(link_token);
       setTokenExpiration(expiration);
       dispatch({ type: "SET_STATE", state: { linkToken: link_token } });
     } else {
       console.log("[:::::: GENERATING TOKEN ::::: ]");
+
       const response = await fetch(create_token_endpoint, { method: "POST" });
       if (!response.ok) {
         dispatch({ type: "SET_STATE", state: { linkToken: null } });

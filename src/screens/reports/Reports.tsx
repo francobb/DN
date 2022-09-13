@@ -10,55 +10,91 @@ import {
   useTheme,} from "react-native-rapi-ui";
 import * as FileSystem from "expo-file-system";
 import { Ionicons } from "@expo/vector-icons";
-import { Section, SectionContent } from 'react-native-rapi-ui';
-
 import { useTailwind } from "tailwind-rn";
 
 import { ReportStackProps } from "../../types/navigation";
-import { months } from "../../util";
-import { getFiles } from "../../api";
+import { getFileUri, months } from "../../util";
+import { getData, getFiles, storeData } from "../../api";
 import { Context } from "../../provider/PlaidProvider";
 import Card from "../../components/card/Card";
+
+const current = new Date();
+current.setMonth((current.getMonth()-1));
+const prevMonth = current.toLocaleString('default', { month: 'long' });
+let currentYear = current.getFullYear();
+
+type file = {
+  name: string;
+  id: string;
+  pdf: string;
+  uri: string;
+}
+
 
 export default function ({
   navigation,
 }: NativeStackScreenProps<ReportStackProps, "PDFs">) {
   let tailwind = useTailwind();
   const { isDarkmode, setTheme } = useTheme();
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState([]);
-  const [files, setFiles] = useState<any[]>([]);
-  const [filteredFiles, setFilteredFiles] = useState<any[]>([]);
-  const [items, setItems] = useState(months);
   const { dispatch } = useContext(Context);
-
-
+  const [open, setOpen] = useState<boolean>(false); // for dropdown
+  const [value, setValue] = useState<string[]>([prevMonth.substring(0,3)]); // for dropdown
+  const [items, setItems] = useState(months); // for dropdown
+  const [files, setFiles] = useState<file[]>([]);
+  const [filteredFiles, setFilteredFiles] = useState<file[]>([]);
   const fetchFiles = useCallback(async () => {
     console.log("[:::: FETCHING FILES ::::]");
+
     const response = await fetch(getFiles, { method: "GET" });
     if (!response.ok) {
       console.log("::: ISSUE GETTING FILES ::: \n", { response });
       return;
     }
+
     const data = await response.json();
     if (data) {
-      setFiles(data);
-      // console.log("[:::: DATA RETURNED ::::] \n", data.length);
-      dispatch({ type: "SET_STATE", state: { files: data } });
-    }
-  }, [dispatch]);
+      // store to local?
 
-  function getFileUri(name: string) {
-    return FileSystem.documentDirectory + `${encodeURI(name)}`;
-  }
-  async function generatePdf(pdf: any) {
+      setFiles(data);
+    }
+  }, []);
+
+  useEffect(() => setValue([prevMonth.substring(0,3)]), [])
+  useEffect(() => {
+    if (files.length > 0) {
+      filterItems(`${prevMonth.substring(0,3)}`)
+    }
+  }, [files]);
+  useEffect(() => {
+    const init = async () => {
+      await fetchFiles();
+    };
+    init()
+      .then((r) => {
+        console.log("[:::: DONE FETCHING FILES ::::]");
+      })
+      .catch((e) => console.log("::: ERROR FETCHING FILES :::"));
+
+  }, [fetchFiles]);
+
+  const generatePdf = async (pdf: any) => {
     const fileUri = getFileUri(pdf.name);
     pdf.uri = fileUri;
-    if (pdf.pdf) {
-      await FileSystem.writeAsStringAsync(fileUri, pdf?.pdf, {
-        encoding: FileSystem.EncodingType.Base64,
-      });
+
+    let v = await getData(pdf.name);
+
+    if (v) {
+      console.log(":::: RETURNING FROM STORAGE :::::", {v});
+      return v;
+    } else {
+      if (!pdf.uri && pdf.pdf) {
+        console.log(":::: GENERATING FILE :::::");
+        await FileSystem.writeAsStringAsync(fileUri, pdf?.pdf, {
+          encoding: FileSystem.EncodingType.Base64,
+        });
+      }
     }
+
 
     /**
      *  [ Example of how to write to a text file locally ]
@@ -98,14 +134,17 @@ export default function ({
     return pdf;
   }
 
-  useEffect(() => {
-    const init = async () => {
-      await fetchFiles();
-    };
-    init()
-      .then((r) => console.log("[:::: DONE FETCHING FILES ::::]"))
-      .catch((e) => console.log("::: ERROR FETCHING FILES :::"));
-  }, [dispatch, fetchFiles]);
+  function filterItems(value: string) {
+    let localFilteredFiles
+    localFilteredFiles = files.filter((file) => {
+      return (
+        value.indexOf(file.name.substring(0, file.name.indexOf("_"))) >= 0
+      );
+    });
+    setFilteredFiles(localFilteredFiles);
+  }
+
+
 
   return (
     <Layout>
@@ -135,8 +174,9 @@ export default function ({
         }}
       />
       <View>
-        <View style={[{ zIndex: 100 }, tailwind("items-center mt-5")]}>
-          <View style={tailwind("w-80 mt-10")}>
+        <View style={[{ zIndex: 100 }, tailwind("items-center")]}>
+          <View style={[{marginLeft: 15, marginRight: 15},tailwind("mt-10")]}>
+          <Text style={{marginBottom: 10}}>Months</Text>
             <DropDownPicker
               open={open}
               value={value}
@@ -145,7 +185,7 @@ export default function ({
               setValue={setValue}
               setItems={setItems}
               theme={isDarkmode ? "DARK" : "LIGHT"}
-              max={3}
+              max={4}
               multiple={true}
               mode="BADGE"
               placeholder="Choose A Month"
@@ -154,11 +194,8 @@ export default function ({
                   let localFilteredFiles;
                   localFilteredFiles = files.filter((file) => {
                     return (
-                      value.indexOf(
-                        file.name.substring(0, file.name.indexOf("_"))
-                      ) >= 0
+                      value.indexOf(file.name.substring(0, file.name.indexOf("_"))) >= 0
                     );
-                    // console.log(value.indexOf(file.name.substring(0, file.name.indexOf("_"))));
                   });
                   setFilteredFiles(localFilteredFiles);
                 }
@@ -167,59 +204,49 @@ export default function ({
                 backgroundColor: "#dfdfdf",
                 zIndex: 999,
               }}
-              // dropDownContainerStyle={tailwind("w-80 text-xl")}
+              containerStyle={{}}
               badgeDotColors={[
-                "#e76f51",
                 "#00b4d8",
                 "#e9c46a",
                 "#e76f51",
                 "#8ac926",
-                "#00b4d8",
-                "#e9c46a",
               ]}
             />
           </View>
         </View>
-        <View
-          style={[
+        <View style={[
             // tailwind("mt-10"),
             { flexDirection: "row", alignItems: "center", marginTop: 50 },
-          ]}
-        >
-          {/*// divider*/}
-          {/*{*/}
-          {/*  <View style={{ flex: 1, height: 1, backgroundColor: "black" }} />*/}
-          {/*  <Text style={{ textAlign: "center" }}> Reports </Text>*/}
-          {/*  <View style={{ flex: 1, height: 1, backgroundColor: "black" }} />*/}
-          {/*}*/}
-
-
+          ]}>
+          <Text style={{marginLeft: 15, marginRight:15}}>Reports</Text>
         </View>
-        <View
-          style={[tailwind("mt-5 items-center"), { zIndex: 0 }]}
-        >
+        <View style={[tailwind(""), { marginHorizontal: 5 }]}>
           {
-            filteredFiles.map((file, index) => {
-              generatePdf(file)
-                .then((res) => {
-                    // console.log("::: Done generating PDF ::: \n", { res });
-                    // gFile = res;
-                    return res;
-                  })
-                .catch((e) => console.log("::: ERROR Generating PDF ::: \n", { e }));
-
+            filteredFiles.length
+              ? filteredFiles.sort((a,b) =>
+              (a.name.substring(4, 8) < b.name.substring(4, 8)) ? 1 : -1).map((file, index) => {
               let name = months.find( (m) => m.value === file.name.substring(0, 3));
               let year = file.name.substring(4, 8);
+
+
+                if (!file.uri) {
+                  generatePdf(file)
+                    .then((res) => {
+                      console.log("::: DONE GENERATING PDF ::: \n", {res});
+                      return res;
+                    })
+                    .catch((e) => console.log("::: ERROR GENERATING PDF ::: \n", { e }));
+                }
+
+
+              // check local storage first ... or context ?
 
               return (
                 <View
                   key={index}
                   style={tailwind("rounded-lg p-3 ")}
                 >
-                  {/*<View style={tailwind("")}>*/}
-                  {/*  <Text>Style me</Text>*/}
-                  {/*</View>*/}
-                  <Card>
+                  <Card style={tailwind("w-full")}>
                     <Button
                       title={`View ${name?.label} ${year} Report`}
                       onPress={() => {
@@ -230,6 +257,7 @@ export default function ({
                 </View>
               );
             })
+              : <View style={[tailwind("mt-5"), { marginHorizontal: 6 }]}><Text> Choose a month and see the Reports</Text></View>
           }
         </View>
       </View>
@@ -239,12 +267,12 @@ export default function ({
 
 /*
 TODO:
- 1. save pdf buffer to file? [x]
- 2. find expo pdf viewer to view buffer pdf [x]
  3. cleanup component
   - use better logging ? (bigger issue)
   - use dispatch
   - fix typescript issues (any)
   - figure out better design ?
   - use tailwind mostly
+ 1. save pdf buffer to file? [x]
+ 2. find expo pdf viewer to view buffer pdf [x]
  */

@@ -3,8 +3,6 @@ import { url } from "../api";
 import { TransactionsDataItem } from "../types/navigation";
 
 interface PlaidState {
-  files: any[]
-  url: string;
   transactions: TransactionsDataItem[];
   balance: number | null;
   publicToken: string;
@@ -25,7 +23,6 @@ interface PlaidState {
 }
 
 const initialState: PlaidState = {
-  url,
   transactions: [],
   balance: null,
   publicToken: "",
