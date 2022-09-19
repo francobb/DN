@@ -1,30 +1,29 @@
 import React from "react";
-import { View, Linking, TouchableHighlight } from "react-native";
-import { MainTabsParamList } from "../types/navigation";
+import { View, TouchableHighlight } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { useTailwind } from "tailwind-rn";
 import { FlatGrid } from 'react-native-super-grid';
 import {
   Layout,
   Text,
   TopNav,
   useTheme,
-  themeColor,
-} from "react-native-rapi-ui";
+  themeColor,} from "react-native-rapi-ui";
 import { Ionicons } from "@expo/vector-icons";
+import { useTailwind } from "tailwind-rn";
+import { MainTabsParamList } from "../types/navigation";
 
 export default function ({
   navigation,
 }: NativeStackScreenProps<MainTabsParamList, "Home">) {
   const tailwind = useTailwind();
   const { isDarkmode, setTheme } = useTheme();
-  const [items, setItems] = React.useState([
-      {name: '212 WELLES STREET', code: '#1abc9c'},
-      {name: '23 PARADIS AVENUE', code: '#444795'},
-  ]);
+  let properties = [
+    {name: '212 WELLES STREET', code: '#1abc9c'},
+    {name: '23 PARADIS AVENUE', code: '#444795'},
+  ]
 
   function _onPressButton(category: string) {
-    navigation.navigate("Category", { name: category })
+    navigation.navigate("SingleProperty", { name: category })
   }
 
   return (
@@ -59,14 +58,18 @@ export default function ({
       <View style={{ alignItems: "center", }} >
       <FlatGrid
           itemDimension={500}
-          spacing={10}
-          data={[...items]}
+          spacing={30}
+          data={[...properties]}
           renderItem={({ item }) => (
               <TouchableHighlight onPress={()=>_onPressButton(item.name)} >
-                  {/* <View style={[styles.itemContainer, { backgroundColor: item.code }]}> */}
-                  <View style={[tailwind("justify-start rounded-lg p-3 "), { backgroundColor: item.code, height: 100 }]}>
-                      <Text style={tailwind("font-semibold text-sm text-center")}>{item.name}</Text>
+                <View>
+                  <View style={[tailwind("justify-center rounded-lg p-3"), {
+                    backgroundColor: item.code,
+                    height: 100
+                  }]}>
+                      <Text style={tailwind("font-semibold text-xl text-center")}>{item.name}</Text>
                   </View>
+                </View>
               </TouchableHighlight>
           )}
       />
@@ -74,3 +77,10 @@ export default function ({
     </Layout>
   );
 }
+
+/**
+ * todo:
+ *  1) move static data to backend
+ *  2)
+ */
+
