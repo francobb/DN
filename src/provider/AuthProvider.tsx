@@ -1,6 +1,8 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { supabase } from '../initSupabase';
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+
 import { Session } from '@supabase/supabase-js';
+
 type ContextProps = {
 	user: null | boolean;
 	session: Session | null;
@@ -13,25 +15,44 @@ interface Props {
 }
 
 const AuthProvider = (props: Props) => {
+	const auth = getAuth();
+
 	// user null = loading
 	const [user, setUser] = useState<null | boolean>(null);
 	const [session, setSession] = useState<Session | null>(null);
 
+	// useEffect(() => {
+	// 	const session = supabase.auth.session();
+	// 	setSession(session);
+	// 	setUser(session ? true : false);
+	// 	const { data: authListener } = supabase.auth.onAuthStateChange(
+	// 		async (event, session) => {
+	// 			console.log(`Supabase auth event: ${event}`);
+	// 			setSession(session);
+	// 			setUser(session ? true : false);
+	// 		}
+	// 	);
+	// 	return () => {
+	// 		authListener!.unsubscribe();
+	// 	};
+	// }, [user]);
+
 	useEffect(() => {
-		const session = supabase.auth.session();
-		setSession(session);
-		setUser(session ? true : false);
-		const { data: authListener } = supabase.auth.onAuthStateChange(
-			async (event, session) => {
-				console.log(`Supabase auth event: ${event}`);
-				setSession(session);
-				setUser(session ? true : false);
+		checkGoogleLogin();
+	}, []);
+
+	function checkGoogleLogin() {
+		onAuthStateChanged(auth, (u) => {
+			if (u) {
+				setUser(true);
+				// getUserData();
+			} else {
+				setUser(false);
+				// setUserData(null);
 			}
-		);
-		return () => {
-			authListener!.unsubscribe();
-		};
-	}, [user]);
+		});
+	}
+
 
 	return (
 		<AuthContext.Provider

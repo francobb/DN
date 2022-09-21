@@ -3,8 +3,8 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import MainTabs from './MainTabs';
 import Auth from './AuthStack';
-import { AuthContext } from '../provider/AuthProvider';
 import Loading from '../screens/utils/Loading';
+import { AuthContext } from '../provider/AuthProvider';
 
 export default () => {
 	const auth = useContext(AuthContext);

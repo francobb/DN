@@ -6,9 +6,6 @@ import {
   KeyboardAvoidingView,
   Image,
 } from "react-native";
-import { supabase } from "../../initSupabase";
-import { AuthStackParamList } from "../../types/navigation";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import {
   Layout,
   Text,
@@ -17,10 +14,19 @@ import {
   useTheme,
   themeColor,
 } from "react-native-rapi-ui";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+
+
+import { supabase } from "../../initSupabase";
+import { AuthStackParamList } from "../../types/navigation";
+
 
 export default function ({
   navigation,
 }: NativeStackScreenProps<AuthStackParamList, "Register">) {
+  const auth = getAuth();
+
   const { isDarkmode, setTheme } = useTheme();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -41,6 +47,22 @@ export default function ({
       alert(error.message);
     }
   }
+
+
+  async function registerWithEmail() {
+    setLoading(true);
+    await createUserWithEmailAndPassword(auth, email, password).catch(function (
+      error
+    ) {
+      // Handle Errors here.
+      let errorCode = error.code;
+      let errorMessage = error.message;
+      // ...
+      setLoading(false);
+      alert(errorMessage);
+    });
+  }
+
   return (
     <KeyboardAvoidingView behavior="height" enabled style={{ flex: 1 }}>
       <Layout>
@@ -110,7 +132,8 @@ export default function ({
             <Button
               text={loading ? "Loading" : "Create an account"}
               onPress={() => {
-                register();
+                // register();
+                registerWithEmail();
               }}
               style={{
                 marginTop: 20,

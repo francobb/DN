@@ -6,7 +6,7 @@ import { AuthProvider } from "./src/provider/AuthProvider";
 import {TailwindProvider} from 'tailwind-rn';
 import utilities from './tailwind.json';
 import { PlaidProvider } from "./src/provider/PlaidProvider";
-
+import './src/config/firebase';
 
 export default function App() {
   const images = [
