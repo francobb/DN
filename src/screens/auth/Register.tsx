@@ -17,10 +17,7 @@ import {
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
-
-import { supabase } from "../../initSupabase";
 import { AuthStackParamList } from "../../types/navigation";
-
 
 export default function ({
   navigation,
@@ -31,23 +28,6 @@ export default function ({
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
-
-  async function register() {
-    setLoading(true);
-    const { user, error } = await supabase.auth.signUp({
-      email: email,
-      password: password,
-    });
-    if (!error && !user) {
-      setLoading(false);
-      alert("Check your email for the login link!");
-    }
-    if (error) {
-      setLoading(false);
-      alert(error.message);
-    }
-  }
-
 
   async function registerWithEmail() {
     setLoading(true);

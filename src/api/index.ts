@@ -1,15 +1,20 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { PlaidState } from "../provider/PlaidProvider";
+import Constants from "expo-constants";
 import { AccountsGetResponse, Transaction } from "plaid/dist/api";
 import { TransactionsDataItem } from "../types/navigation";
 import { formatCurrency } from "../util";
+const { manifest } = Constants;
 
-export const url = 'https://us-central1-coughee-pot.cloudfunctions.net/app';
+export const url = Constants.manifest?.extra?.hostURL;
+const localUrl = `http://${manifest?.debuggerHost?.split(':').shift()}:8000`;
+
+export const init_endpoint = `${url}/api/init`;
 export const info_endpoint = `${url}/api/info`;
 export const create_token_endpoint = `${url}/api/create_link_token`;
 export const transactions_endpoint = `${url}/api/transactions/`;
 export const balance_endpoint = `${url}/api/balance/`;
 export const set_access_token = `${url}/api/set_access_token`;
+export const getFiles = `${url}/api/files`;
 
 export const storeData = async (value: any, key: any) => {
   try {
@@ -28,7 +33,7 @@ export const storeData = async (value: any, key: any) => {
    }
  };
 
-export const getData = async () => {
+export const getTokenData = async () => {
   try {
     const jsonValue = await AsyncStorage.getItem('@link_token')
     let pJson = JSON.parse(jsonValue!)
@@ -64,7 +69,6 @@ export const transformBalanceData = (data: AccountsGetResponse) => {
 export const transformTransactionsData = (data: {
   latest_transactions: Transaction[];
 }): TransactionsDataItem[] => {
-  // setTransactions(items);
   return data.latest_transactions!.map((t) => {
     const item: TransactionsDataItem = {
       name: t.name!,

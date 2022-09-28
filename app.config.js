@@ -38,6 +38,7 @@ export default {
         "firebaseMessagingSenderId": process.env.FIREBASE_MESSAGING_SENDER_ID,
         "firebaseAppId": process.env.FIREBASE_APP_ID,
         "webClientId": process.env.GOOGLE_CLIENT_ID,
+        "hostURL": process.env.API_ROOT_URL
     },
     "description": ""
     }

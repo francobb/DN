@@ -87,7 +87,7 @@ export default function ({
       console.log(":::: RETURNING FROM STORAGE :::::", {v});
       return v;
     } else {
-      if (!pdf.uri && pdf.pdf) {
+      if (pdf.pdf) {
         console.log(":::: GENERATING FILE :::::");
         await FileSystem.writeAsStringAsync(fileUri, pdf?.pdf, {
           encoding: FileSystem.EncodingType.Base64,

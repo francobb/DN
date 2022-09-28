@@ -1,11 +1,10 @@
 import React from 'react';
-import { Linking, View, Text } from 'react-native';
+import { View, Text } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Button, Layout, Section, themeColor, TopNav, useTheme } from 'react-native-rapi-ui';
+import { Layout, themeColor, TopNav, useTheme } from 'react-native-rapi-ui';
 import { Ionicons } from '@expo/vector-icons';
 import { getAuth, signOut } from "firebase/auth";
 
-import { supabase } from '../initSupabase';
 import { MainTabsParamList } from "../types/navigation";
 
 export default function ({

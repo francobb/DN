@@ -16,11 +16,11 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import * as Google from 'expo-auth-session/providers/google';
 import Constants from "expo-constants";
 import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithCredential } from "firebase/auth";
+import firebase from "firebase/compat";
+import OAuthCredential = firebase.auth.OAuthCredential;
 
 import { AuthStackParamList } from "../../types/navigation";
 import { info_endpoint, init_endpoint } from "../../api";
-import firebase from "firebase/compat";
-import OAuthCredential = firebase.auth.OAuthCredential;
 
 export default function ({
   navigation,
@@ -37,31 +37,31 @@ export default function ({
     },
   );
 
+
   React.useEffect(() => {
     if (response?.type === 'success') {
-
       // console.log(":::: RESPONSE PARAMS FROM G AUTH :::: \n", {response});
       const { id_token } = response.params;
       const credential = GoogleAuthProvider.credential(id_token);
-
-      // console.log(":::: HERE IS THE CREDENTIAL :::: \n", {credential});
+      console.log(":::: HERE IS THE CREDENTIAL :::: \n", {credential});
 
       signInWithCredential(auth, credential)
         .then((r) => {
-          console.log(":::: RESPONSE FROM SIGN IN :::: \n", { r });
+          console.log(":::: SUCCESSFUL SIGN IN ::::");
 
-          connectDrive(credential, r)
-            .then((r) => {
-              console.log(":::: THIS IS THE RESPONSE FROM SENDING THE TOKEN ::::: \n", {r});
-            })
-            .catch((e) => {
-              console.log({e});
-            });
+          const creds = GoogleAuthProvider.credentialFromResult(r);
+          const token = creds?.accessToken;
+          // todo: wip can i send tokens from frontend?
+          // connectDrive(credential, r)
+          //   .then((r) => {
+          //     console.log(":::: THIS IS THE RESPONSE FROM SENDING THE TOKEN ::::: \n", {r});
+          //   })
+          //   .catch((e) => {
+          //     console.log(":::: THIS IS THE ERROR ::::", {e})
+          //   });
 
         })
         .catch((e) => console.log(":::: THERE WAS AN ERROR :::: \n", {e}));
-
-
     }
   }, [response]);
 
@@ -165,7 +165,7 @@ export default function ({
               onChangeText={(text) => setPassword(text)}
             />
             <Button
-              text={loading ? "Loading" : "Continue"}
+              text={loading ? "Loading" : "Sign In With Email"}
               onPress={async () => {
                 // await login();
                 await loginWithEmail();

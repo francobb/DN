@@ -39,6 +39,7 @@ export default function ({
       alert(error.message);
     }
   }
+
   return (
     <KeyboardAvoidingView behavior="height" enabled style={{ flex: 1 }}>
       <Layout>
