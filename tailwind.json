@@ -29,6 +29,11 @@
 			"display": "grid"
 		}
 	},
+	"inline-block": {
+		"style": {
+			"display": "inline-block"
+		}
+	},
 	"w-80": {
 		"style": {
 			"width": 320

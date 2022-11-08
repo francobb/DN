@@ -15,12 +15,10 @@ import {
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import * as Google from 'expo-auth-session/providers/google';
 import Constants from "expo-constants";
+import * as WebBrowser from 'expo-web-browser';
 import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithCredential } from "firebase/auth";
-import firebase from "firebase/compat";
-import OAuthCredential = firebase.auth.OAuthCredential;
-
 import { AuthStackParamList } from "../../types/navigation";
-import { info_endpoint, init_endpoint } from "../../api";
+import { getFiles, getPdfs, info_endpoint, init_endpoint } from "../../api";
 
 export default function ({
   navigation,
@@ -30,72 +28,58 @@ export default function ({
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
-
   const [request, response, promptAsync] = Google.useIdTokenAuthRequest(
     {
       clientId: Constants.manifest?.extra?.webClientId,
     },
   );
 
-
   React.useEffect(() => {
     if (response?.type === 'success') {
       // console.log(":::: RESPONSE PARAMS FROM G AUTH :::: \n", {response});
       const { id_token } = response.params;
       const credential = GoogleAuthProvider.credential(id_token);
-      console.log(":::: HERE IS THE CREDENTIAL :::: \n", {credential});
+      // console.log(":::: HERE IS THE CREDENTIAL :::: \n", {credential});
 
       signInWithCredential(auth, credential)
-        .then((r) => {
+        .then(async (r) => {
           console.log(":::: SUCCESSFUL SIGN IN ::::");
 
-          const creds = GoogleAuthProvider.credentialFromResult(r);
-          const token = creds?.accessToken;
-          // todo: wip can i send tokens from frontend?
-          // connectDrive(credential, r)
-          //   .then((r) => {
-          //     console.log(":::: THIS IS THE RESPONSE FROM SENDING THE TOKEN ::::: \n", {r});
-          //   })
-          //   .catch((e) => {
-          //     console.log(":::: THIS IS THE ERROR ::::", {e})
-          //   });
+          // const response = await fetch(getPdfs, { method: "GET" });
 
         })
-        .catch((e) => console.log(":::: THERE WAS AN ERROR :::: \n", {e}));
+        .catch((e) => console.log(":::: THERE WAS AN ERROR TRYING TO AUTHENTICATE :::: \n", {e}));
     }
   }, [response]);
 
   async function loginWithEmail() {
     setLoading(true);
-    await signInWithEmailAndPassword(auth, email, password).catch(function (
-      error
-    ) {
+    await signInWithEmailAndPassword(auth, email, password)
+      .catch(function (error) {
       // Handle Errors here.
       let errorCode = error.code;
       let errorMessage = error.message;
-      // ...
       setLoading(false);
       alert(errorMessage);
     });
   }
 
-  async function connectDrive(cred: OAuthCredential, resi: any) {
-    let header = new Headers();
+  async function authenticateDrive() {
+    setLoading(true)
+    console.log("INIT ENDPOINT :::: ", init_endpoint);
+    let res = await fetch(init_endpoint);
+    setLoading(false);
+    console.log({res});
+    if (res.ok) {
+      const data = await res.json();
+      //
+      await WebBrowser.openBrowserAsync(data);
+      // setResult(result);
+      // WebBrowser.dismissBrowser()
 
-    header.set('X-Firebase-Token', JSON.stringify(cred))
-    header.set('X-Firebase-Cred', JSON.stringify(resi))
-
-    const response = await fetch(init_endpoint, {
-      method: "POST",
-      headers: header,
-    });
-
-    if (!response.ok){
-      console.log(":::: FAILED RESPONSE ::::");
+      // console.log(" :::: AYE BAY BAY :::: ", {data});
+      console.log(" :::: Logged into backend Drive API? :::: ");
     }
-
-    return response.json();
-
   }
 
   return (
@@ -179,12 +163,16 @@ export default function ({
             <Button
               text={loading ? "Loading" : "Sign in with Google"}
               onPress={async () => {
-                await promptAsync();
+                // await promptAsync();
+                authenticateDrive().then(async r =>
+                    await promptAsync()
+                ).catch((e) => console.log("::: PROBLEM AUTHENTICATING :::", {e}));
+
               }}
               style={{
                 marginTop: 20,
               }}
-              disabled={loading}
+              disabled={loading || !request}
             />
 
             <View

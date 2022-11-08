@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { View, FlatList, StyleSheet } from "react-native";
 import { NativeStackScreenProps } from "react-native-screens/native-stack";
 import { Layout, Text, themeColor, TopNav, useTheme } from "react-native-rapi-ui/index";
@@ -8,6 +8,7 @@ import { useTailwind } from "tailwind-rn";
 import { withHooksHOC } from "./utils/useThemeHOC";
 import { MainTabsParamList } from "../types/navigation";
 import properties from "../api/properties.json"
+import { getData } from "../api";
 
 type Unit = {
   name: string,
@@ -90,12 +91,33 @@ type Props = NativeStackScreenProps<MainTabsParamList, 'SingleProperty'>;
 const SingleProperty = ({ route, navigation }: Props) => {
   const tailwind = useTailwind();
   const { isDarkmode, setTheme } = useTheme();
+  const [props, setProps] = useState<any>({})
+  const getPropertiesFromStore = useCallback(async () => {
+    let propsFromStorage = await getData("properties")
+    if (propsFromStorage){
+      console.log("getting from storage");
+      setProps(propsFromStorage)
+    }
+  }, [])
   let icon = isDarkmode ? "sunny": "moon";
+
   let house = properties.houses.find(h => {
     if (h && h.location.toString().includes(route.params.name)) {
       return h
     }
   });
+
+  let crib = props.houses.find((h:House) => {
+    if (h && h.location.toString().includes(route.params.name)) {
+      return h
+    }
+  });
+
+  useEffect(() => {
+    getPropertiesFromStore()
+      .then(r => console.log("::::: FINISHED GETTING PROPS FROM STORE :::::"));
+  }, [getPropertiesFromStore])
+
 
   const renderItem = ({ item }: any) => {
     return (
@@ -128,19 +150,20 @@ const SingleProperty = ({ route, navigation }: Props) => {
             isDarkmode ? (setTheme("light")) : setTheme("dark");
           }}
         />
-        { house ? (
+        { crib ? (
           <View
             style={{
               flex: 1,
               alignItems: "center",
             }}>
             <Text style={tailwind("text-center text-2xl mt-5")}>
-              Monthly Income: ${house.units.map(u =>+u.rent).reduce((a, b) => a + b)}
+              Monthly Income: ${crib.units.map((u: { rent: string | number; }) =>+u.rent).reduce((a: any, b: any) => a + b)}
             </Text>
-            <Text style={tailwind("text-center")}>Mortgage: {house.mortgage}</Text>
+            <Text style={tailwind("text-center")}>Mortgage: {crib.mortgage}</Text>
+            <Text style={tailwind("text-center")}>Average Cost: $999.00</Text>
             <View style={tailwind("")}>
               <FlatList
-                data={[house]}
+                data={[crib]}
                 renderItem={renderItem}
                 keyExtractor={item => item.id}
               />

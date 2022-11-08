@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import { Button, View } from "react-native";
+import { Button, View, ActivityIndicator } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import {
@@ -14,7 +14,7 @@ import { useTailwind } from "tailwind-rn";
 
 import { ReportStackProps } from "../../types/navigation";
 import { getFileUri, months } from "../../util";
-import { getData, getFiles, storeData } from "../../api";
+import { getData, getFiles, getPdfs, storeData } from "../../api";
 import { Context } from "../../provider/PlaidProvider";
 import Card from "../../components/card/Card";
 
@@ -37,6 +37,7 @@ export default function ({
   let tailwind = useTailwind();
   const { isDarkmode, setTheme } = useTheme();
   const { dispatch } = useContext(Context);
+  const [loading, setLoading] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false); // for dropdown
   const [value, setValue] = useState<string[]>([prevMonth.substring(0,3)]); // for dropdown
   const [items, setItems] = useState(months); // for dropdown
@@ -44,13 +45,14 @@ export default function ({
   const [filteredFiles, setFilteredFiles] = useState<file[]>([]);
   const fetchFiles = useCallback(async () => {
     console.log("[:::: FETCHING FILES ::::]");
-
-    const response = await fetch(getFiles, { method: "GET" });
+    setLoading(true)
+    const response = await fetch(getPdfs, { method: "GET" });
+    setLoading(false)
     if (!response.ok) {
       console.log("::: ISSUE GETTING FILES ::: \n", { response });
       return;
     }
-
+    console.log("[:::: DONE FETCHING FILES ::::]");
     const data = await response.json();
     if (data) {
       // store to local?
@@ -144,8 +146,13 @@ export default function ({
     setFilteredFiles(localFilteredFiles);
   }
 
-
-
+  const Loader = (
+    <>
+      {/*<ActivityIndicator size="large" />*/}
+      {/*<ActivityIndicator size="small" color="#0000ff" />*/}
+      <ActivityIndicator size="large" color="#00ff00" />
+    </>
+  );
   return (
     <Layout>
       <TopNav
@@ -173,10 +180,12 @@ export default function ({
           }
         }}
       />
-      <View>
+      { loading
+        ? Loader
+        : (<View>
         <View style={[{ zIndex: 100 }, tailwind("items-center")]}>
           <View style={[{marginLeft: 15, marginRight: 15},tailwind("mt-10")]}>
-          <Text style={{marginBottom: 10}}>Months</Text>
+            <Text style={{marginBottom: 10}}>Months</Text>
             <DropDownPicker
               open={open}
               value={value}
@@ -215,18 +224,18 @@ export default function ({
           </View>
         </View>
         <View style={[
-            // tailwind("mt-10"),
-            { flexDirection: "row", alignItems: "center", marginTop: 50 },
-          ]}>
+          // tailwind("mt-10"),
+          { flexDirection: "row", alignItems: "center", marginTop: 50 },
+        ]}>
           <Text style={{marginLeft: 15, marginRight:15}}>Reports</Text>
         </View>
         <View style={[tailwind(""), { marginHorizontal: 5 }]}>
           {
             filteredFiles.length
               ? filteredFiles.sort((a,b) =>
-              (a.name.substring(4, 8) < b.name.substring(4, 8)) ? 1 : -1).map((file, index) => {
-              let name = months.find( (m) => m.value === file.name.substring(0, 3));
-              let year = file.name.substring(4, 8);
+                (a.name.substring(4, 8) < b.name.substring(4, 8)) ? 1 : -1).map((file, index) => {
+                let name = months.find( (m) => m.value === file.name.substring(0, 3));
+                let year = file.name.substring(4, 8);
 
 
                 if (!file.uri) {
@@ -238,29 +247,29 @@ export default function ({
                     .catch((e) => console.log("::: ERROR GENERATING PDF ::: \n", { e }));
                 }
 
+                // check local storage first ... or context ?
 
-              // check local storage first ... or context ?
-
-              return (
-                <View
-                  key={index}
-                  style={tailwind("rounded-lg p-3 ")}
-                >
-                  <Card style={tailwind("w-full")}>
-                    <Button
-                      title={`View ${name?.label} ${year} Report`}
-                      onPress={() => {
-                        navigation.navigate("PDFViewer", { uri: file.uri })
-                      }}
-                    />
-                  </Card>
-                </View>
-              );
-            })
+                return (
+                  <View
+                    key={index}
+                    style={tailwind("rounded-lg p-3 ")}
+                  >
+                    <Card style={tailwind("w-full")}>
+                      <Button
+                        title={`View ${name?.label} ${year} Report`}
+                        onPress={() => {
+                          navigation.navigate("PDFViewer", { uri: file.uri })
+                        }}
+                      />
+                    </Card>
+                  </View>
+                );
+              })
               : <View style={[tailwind("mt-5"), { marginHorizontal: 6 }]}><Text> Choose a month and see the Reports</Text></View>
           }
         </View>
-      </View>
+      </View>)
+      }
     </Layout>
   );
 }

@@ -9,7 +9,7 @@ import {
 
 const Card = (props: any) => {
 
-  const { children, elevation, opacity, cornerRadius } = props;
+  const { children, elevation, opacity, cornerRadius, backgroundColor } = props;
 
   const cardStyle = Platform.select({
     ios: () =>
@@ -19,7 +19,7 @@ const Card = (props: any) => {
           shadowOpacity:opacity,
           shadowOffset:{ width: 0, height: elevation },
           borderRadius:cornerRadius,
-          backgroundColor: props.backgroundColor,
+          backgroundColor: backgroundColor,
           // width: Dimensions.get('window').width - 40, //todo: fix offset
         }
       }),

@@ -15,6 +15,7 @@ export const transactions_endpoint = `${url}/api/transactions/`;
 export const balance_endpoint = `${url}/api/balance/`;
 export const set_access_token = `${url}/api/set_access_token`;
 export const getFiles = `${url}/api/files`;
+export const getPdfs = `${url}/api/pdfs`;
 
 export const storeData = async (value: any, key: any) => {
   try {
