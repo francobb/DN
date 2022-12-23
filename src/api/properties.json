@@ -3,6 +3,8 @@
     {
       "id":"hJW95_ykzBW1mPTZ0j-URA",
       "location":  "212 WELLES STREET WOONSOCKET, RI 02895",
+      "beds": 9,
+      "bath": 3,
       "units": [
         {
           "name": "Bill Fitzpatrick",
@@ -23,38 +25,55 @@
           "late": ""
         }
       ],
-      "mortgage": "$1890"
+      "mortgage": "$1890",
+      "code": "#444795",
+      "fileName": "https://photos.zillowstatic.com/fp/b0278f65c5a9d0e36a486b83baf5444e-uncropped_scaled_within_1536_1152.webp"
     },
     {
       "id":"rfUFqPC6L4kAwbXvyyRPjg",
       "location": "23 PARADIS AVENUE WOONSOCKET, RI 02895",
+      "beds": 11,
+      "bath": 4,
       "units": [
         {
           "name": "Sonia Hamdeed",
           "rent": "800.00",
           "lease": "Monthly",
-          "late": ""
+          "late": "",
+          "beds": 2,
+          "bath": 1
         },
         {
           "name": "Miguel Lopez",
           "rent": "1000.00",
           "lease": "Monthly",
-          "late": ""
+          "late": "",
+          "beds": 3,
+          "bath": 1
         },
         {
           "name": "Amneris Nieves",
           "rent": "1000.00",
           "lease": "Monthly",
-          "late": ""
+          "late": "",
+          "beds": 3,
+          "bath": 1
         },
         {
           "name": "Shane Kamer",
           "rent": "1100.00",
           "lease": "Monthly",
-          "late": "2"
+          "late": "2",
+          "beds": 3,
+          "bath": 1
         }
       ],
-      "mortgage": "$2460"
+      "mortgage": "$2460",
+      "code": "#1abc9c",
+      "fileName": "https://photos.zillowstatic.com/fp/a7e12d4b4a4a70873e5375f55d68b0c3-uncropped_scaled_within_1536_1152.webp"
     }
   ]
 }
+
+
+

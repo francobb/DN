@@ -30,7 +30,6 @@ type file = {
   uri: string;
 }
 
-
 export default function ({
   navigation,
 }: NativeStackScreenProps<ReportStackProps, "PDFs">) {
@@ -46,7 +45,7 @@ export default function ({
   const fetchFiles = useCallback(async () => {
     console.log("[:::: FETCHING FILES ::::]");
     setLoading(true)
-    const response = await fetch(getPdfs, { method: "GET" });
+    const response = await fetch(getFiles, { method: "GET" });
     setLoading(false)
     if (!response.ok) {
       console.log("::: ISSUE GETTING FILES ::: \n", { response });
@@ -55,8 +54,6 @@ export default function ({
     console.log("[:::: DONE FETCHING FILES ::::]");
     const data = await response.json();
     if (data) {
-      // store to local?
-
       setFiles(data);
     }
   }, []);
